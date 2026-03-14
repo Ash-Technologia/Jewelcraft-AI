@@ -1,0 +1,309 @@
+/* ManualControls.css */
+
+.mc-root {
+    padding: 8px 10px;
+    height: 100%;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 242, 255, 0.18) transparent;
+}
+
+.mc-root::-webkit-scrollbar {
+    width: 3px;
+}
+.mc-root::-webkit-scrollbar-track {
+    background: transparent;
+}
+.mc-root::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 255, 0.2);
+    border-radius: 2px;
+}
+
+/* ── Warning banner ── */
+.mc-warning {
+    background: rgba(99, 102, 241, 0.1);
+    /* Indigo styling */
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.mc-warning-icon {
+    color: var(--accent-indigo);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.mc-warning-text {
+    font-size: 11px;
+    color: #a5b4fc;
+    /* Indigo 300 */
+}
+
+/* ── Metal / Stone swatch grids ── */
+.mc-swatch-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mc-stone-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+/* ── Metal button ── */
+.mc-metal-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-primary);
+    -webkit-backdrop-filter: var(--blur-sm);
+    backdrop-filter: var(--blur-sm);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.mc-metal-btn.active {
+    background: rgba(0, 242, 255, 0.15);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+/* ── Metal color dot ── */
+.mc-metal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--mc-metal-bg);
+}
+
+.mc-stone-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-primary);
+    -webkit-backdrop-filter: var(--blur-sm);
+    backdrop-filter: var(--blur-sm);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.mc-stone-btn.active {
+    background: rgba(79, 142, 247, 0.15);
+    border-color: rgba(79, 142, 247, 0.5);
+    color: #7BAAFF;
+}
+
+.mc-stone-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: var(--mc-stone-bg, white);
+}
+
+.mc-option-btn-vsmall {
+    font-size: 10px !important;
+    border-radius: 8px !important;
+    min-width: 45px;
+}
+
+/* ── Band profile row ── */
+.mc-profile-row {
+    margin-bottom: 8px;
+}
+
+.mc-profile-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.mc-profile-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ── Prong count row ── */
+.mc-prong-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+/* ── Toggle switch (Halo & Engraving) ── */
+.mc-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.mc-toggle-track {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.mc-toggle-track.on {
+    background: var(--accent-cyan);
+}
+
+.mc-toggle-track.engraving-on {
+    background: var(--accent-indigo);
+}
+
+.mc-toggle-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mc-toggle-thumb.on {
+    left: 20px;
+}
+
+.mc-toggle-text {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.mc-toggle-text.on {
+    color: var(--accent-cyan);
+}
+
+.mc-toggle-text.engraving-on {
+    color: var(--accent-purple);
+}
+
+/* ── Engraving input ── */
+.mc-engraving-input {
+    margin-bottom: 8px;
+}
+
+/* ── Section component ── */
+.mc-section {
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 14px;
+}
+
+.mc-section-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0;
+}
+
+.mc-section-toggle.open {
+    margin-bottom: 10px;
+}
+
+.mc-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mc-section-chevron {
+    color: var(--text-muted);
+    margin-left: auto;
+    font-size: 12px;
+}
+
+/* ── RangeSlider component ── */
+.mc-slider-root {
+    margin-bottom: 10px;
+}
+
+.mc-slider-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.mc-slider-label {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.mc-slider-value {
+    font-size: 11px;
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+/* ── Motif & Carving Grid ── */
+.mc-motif-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.mc-motif-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.mc-motif-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 242, 255, 0.3);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.mc-motif-btn.active {
+    background: rgba(0, 242, 255, 0.15);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    box-shadow: 0 4px 12px rgba(0, 242, 255, 0.2);
+}

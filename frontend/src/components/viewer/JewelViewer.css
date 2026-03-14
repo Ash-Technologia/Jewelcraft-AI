@@ -1,0 +1,107 @@
+/* JewelViewer.css */
+
+/* ── Outer wrapper ── */
+.jv-root {
+    position: relative;
+    width: 100%;
+}
+
+.jv-root.mini {
+    height: 100%;
+    min-height: 180px;
+    border-radius: 12px;
+    background: var(--bg-obsidian);
+}
+
+.jv-root.full {
+    height: 100%;
+    min-height: 420px;
+    background: rgba(10, 10, 20, 0.8);
+}
+
+/* Canvas inherits the wrapper size */
+.jv-canvas.mini {
+    height: 100%;
+    min-height: 180px;
+    border-radius: 12px;
+    background: var(--bg-obsidian);
+}
+
+.jv-canvas.full {
+    height: 100%;
+    min-height: 420px;
+    background: rgba(10, 10, 20, 0.8);
+}
+
+/* ── Loader ── */
+.jv-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface);
+}
+
+.jv-loader-gem {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.jv-loader-bar-bg {
+    width: 130px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.jv-loader-bar-fg {
+    height: 100%;
+    background: #C9A84C;
+    transition: width 0.2s;
+}
+
+.jv-loader-text {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+/* ── Zoom Controls ── */
+.jv-zoom-controls {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 50;
+}
+
+.jv-zoom-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+}
+
+.jv-zoom-btn:hover {
+    background: rgba(0, 242, 255, 0.15);
+    border-color: rgba(0, 242, 255, 0.4);
+    color: var(--accent-cyan);
+    transform: scale(1.05);
+}
+
+.jv-zoom-btn:active {
+    transform: scale(0.95);
+}

@@ -1,0 +1,140 @@
+/* ─────────────────────────────────────────────────────────────
+   JewelCraft — Auth Page Premium Styles
+   Theme: Crystal Midnight (Obsidian, Cyan, Indigo, Gold)
+   ───────────────────────────────────────────────────────────── */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+    border-radius: var(--r-2xl);
+    border: 1px solid var(--gold-border);
+    box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(201, 168, 76, 0.08);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.auth-header-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.5));
+}
+
+.auth-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+}
+
+.auth-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.auth-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px;
+    border-radius: var(--r-lg);
+    margin-bottom: 32px;
+    border: 1px solid var(--border-subtle);
+}
+
+.auth-tab-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: var(--r-md);
+    transition: all var(--t-med);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-tab-btn.active {
+    background: var(--bg-raised);
+    color: var(--gold-pure);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-input-wrapper {
+    position: relative;
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: color var(--t-fast);
+}
+
+.auth-input {
+    padding-left: 44px;
+    height: 48px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border-default);
+}
+
+.auth-input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--gold-border-strong);
+}
+
+.auth-input:focus + .auth-input-icon {
+    color: var(--gold-pure);
+}
+
+.auth-submit-btn {
+    height: 52px;
+    font-size: 15px;
+    margin-top: 12px;
+}
+
+/* Animations */
+@keyframes auth-fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card {
+    animation: auth-fade-in 0.6s var(--t-luxury) backwards;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 30px 20px;
+    }
+}

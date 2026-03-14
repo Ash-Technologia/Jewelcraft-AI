@@ -1,0 +1,638 @@
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Designer.css — Fixed height propagation so AgentPanel can scroll           */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page container ── */
+.dsgn-page {
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    position: relative;
+    padding-top: 64px;
+}
+
+/* ── Empty State ── */
+.dsgn-empty-state {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.dsgn-empty-card {
+    text-align: center;
+    max-width: 460px;
+    width: 100%;
+    padding: 56px 40px 44px;
+    background: linear-gradient(145deg, rgba(8, 12, 24, 0.65) 0%, rgba(4, 6, 12, 0.85) 100%);
+    -webkit-backdrop-filter: blur(48px);
+    backdrop-filter: blur(48px);
+    border: 1px solid rgba(0, 242, 255, 0.15);
+    border-radius: 32px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.dsgn-empty-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+    animation: dsgn-float 3s ease-in-out infinite;
+}
+
+@keyframes dsgn-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.dsgn-empty-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+}
+
+.dsgn-empty-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-weight: 400;
+}
+
+.dsgn-empty-subtitle strong {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.dsgn-empty-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dsgn-empty-btn {
+    padding: 14px 28px !important;
+    border-radius: 16px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.dsgn-empty-btn-catalog {
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    color: var(--accent-indigo) !important;
+}
+
+.dsgn-sandbox-exit-btn {
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+}
+
+.dsgn-empty-sandbox-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.2s;
+}
+
+.dsgn-empty-sandbox-link span {
+    color: var(--accent-indigo, #6366f1);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.dsgn-empty-sandbox-link:hover {
+    color: var(--text-secondary);
+}
+
+.dsgn-bg-fixed {
+    position: fixed;
+    inset: 0;
+}
+
+/* ── Sandbox banner ── */
+.dsgn-sandbox-banner-subtle {
+    position: fixed;
+    top: 78px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    padding: 5px 18px;
+    background: rgba(201, 168, 76, 0.06);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(201, 168, 76, 0.22);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Floating UI Toggle ── */
+.dsgn-ui-toggle-float {
+    position: fixed;
+    top: 82px;
+    left: 20px;
+    z-index: 200;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(12, 18, 36, 0.7);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    font-size: 16px;
+}
+
+.dsgn-tab-sm {
+    font-size: 11px !important;
+    padding: 4px 12px !important;
+    border-radius: 8px !important;
+}
+
+.dsgn-ui-toggle-float:hover {
+    background: rgba(0, 242, 255, 0.10);
+    border-color: rgba(0, 242, 255, 0.28);
+    transform: scale(1.06);
+}
+
+.dsgn-ui-toggle-float.hidden-ui {
+    opacity: 0.5;
+}
+
+/* ── Toolbar ── */
+.dsgn-toolbar {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px 0 66px;
+    z-index: 60;
+    background: rgba(4, 3, 15, 0.72);
+    backdrop-filter: var(--blur-lg);
+    -webkit-backdrop-filter: var(--blur-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ui-hidden .dsgn-toolbar {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    border-bottom: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BODY — height chain: page → body → main → right → panel-content → agent-panel
+   Every ancestor must have min-height:0 and no blocking overflow.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Body ── */
+.dsgn-body {
+    flex: 1 1 0;
+    /* grow from 0, not content size */
+    min-height: 0;
+    /* REQUIRED */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ── 3-panel grid ── */
+.dsgn-main {
+    flex: 1 1 0;
+    /* grow, min-height:0 propagation */
+    min-height: 0;
+    /* REQUIRED */
+    display: grid;
+    grid-template-columns: 210px 1fr 280px;
+    gap: 12px;
+    padding: 12px 14px 10px 14px;
+    overflow: hidden;
+    transition: all 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 10;
+}
+
+.ui-hidden .dsgn-main {
+    grid-template-columns: 0px 1fr 0px;
+    gap: 0;
+    padding: 0;
+}
+
+/* ── Version Filmstrip ── */
+.dsgn-filmstrip-bar {
+    height: 96px;
+    flex-shrink: 0;
+    width: calc(100% - 28px);
+    margin: 0 auto;
+    border-radius: 18px;
+    background: rgba(8, 7, 20, 0.50);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(0, 242, 255, 0.13);
+    overflow: hidden;
+    padding: 6px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    transition: all 0.35s ease;
+}
+
+.ui-hidden .dsgn-filmstrip-bar {
+    height: 0;
+    padding: 0;
+    margin-bottom: 0;
+    border: none;
+    overflow: hidden;
+}
+
+/* ── Left panel ── */
+.dsgn-left {
+    grid-column: 1;
+    background: linear-gradient(160deg, rgba(10, 14, 28, 0.60) 0%, rgba(5, 7, 15, 0.80) 100%);
+    -webkit-backdrop-filter: blur(48px);
+    backdrop-filter: blur(48px);
+    border: 1px solid rgba(0, 242, 255, 0.10);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    min-height: 0;
+    /* REQUIRED */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.dsgn-left:hover {
+    border-color: rgba(0, 242, 255, 0.22);
+    box-shadow: 0 12px 40px rgba(0, 242, 255, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ── Center viewport ── */
+.dsgn-center {
+    grid-column: 2;
+    position: relative;
+    overflow: hidden;
+    background: rgba(4, 3, 15, 0.25);
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.045);
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.2);
+    min-height: 0;
+    /* REQUIRED */
+}
+
+.dsgn-score-overlay {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 20;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RIGHT PANEL — must propagate height down to AgentPanel
+   ═══════════════════════════════════════════════════════ */
+.dsgn-right {
+    grid-column: 3;
+    background: linear-gradient(160deg, rgba(10, 14, 28, 0.62) 0%, rgba(5, 7, 15, 0.82) 100%);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border: 1px solid rgba(0, 242, 255, 0.10);
+    border-radius: 20px;
+
+    /* column flex so tab-bar + panel-content stack */
+    display: flex;
+    flex-direction: column;
+
+    /* CRITICAL: no overflow here, children scroll themselves */
+    overflow: hidden;
+
+    /* CRITICAL: allow shrinking in grid context */
+    min-height: 0;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    position: relative;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.dsgn-right:hover {
+    border-color: rgba(0, 242, 255, 0.22);
+    box-shadow: 0 12px 40px rgba(0, 242, 255, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dsgn-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.09), transparent 55%, rgba(0, 242, 255, 0.06));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ── Panel tab row — fixed, never shrinks ── */
+.dsgn-panel-tabs {
+    padding: 8px 10px 0 10px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.dsgn-panel-tabs::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.055);
+    margin-top: 8px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.dsgn-panel-tab-btn {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack vertically for better narrow width fit */
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 2px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.dsgn-panel-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dsgn-panel-tab-btn span {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.dsgn-panel-tab-btn.active span {
+    color: var(--accent-cyan);
+}
+
+/* ── Panel content — fills remaining height, NO overflow set here ──
+   overflow: hidden so the child (AgentPanel / analytics) handles scrolling.
+   flex: 1 1 0 + min-height: 0 propagates available height downward.
+   ── */
+.dsgn-panel-content {
+    flex: 1 1 0;
+    /* fill remaining space in .dsgn-right */
+    min-height: 0;
+    /* REQUIRED — allows children to scroll */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* clip, don't scroll — children scroll */
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Analytics panel — its own scrollable area ── */
+.dsgn-analytics {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 12px 12px 16px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 242, 255, 0.18) transparent;
+}
+
+.dsgn-analytics::-webkit-scrollbar {
+    width: 3px;
+}
+
+.dsgn-analytics::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dsgn-analytics::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 255, 0.2);
+    border-radius: 2px;
+}
+
+.dsgn-radar-card {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(165deg, rgba(0, 242, 255, 0.03) 0%, rgba(99, 102, 241, 0.01) 100%);
+    border: 1px solid rgba(0, 242, 255, 0.12);
+    border-radius: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.dsgn-breakdown-card {
+    padding: 16px 18px;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.dsgn-breakdown-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.dsgn-bd-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.dsgn-bd-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    width: 88px;
+    text-transform: capitalize;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dsgn-bd-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.055);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.dsgn-bd-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dsgn-bd-val {
+    font-size: 10px;
+    font-weight: 700;
+    width: 24px;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.45);
+    font-variant-numeric: tabular-nums;
+}
+
+.dsgn-warnings-card {
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    flex-shrink: 0;
+}
+
+.dsgn-warnings-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.dsgn-warning-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.dsgn-warn-critical {
+    background: rgba(255, 80, 80, 0.08);
+    border: 1px solid rgba(255, 80, 80, 0.18);
+}
+
+.dsgn-warn-warning {
+    background: rgba(99, 102, 241, 0.07);
+    border: 1px solid rgba(99, 102, 241, 0.14);
+}
+
+.dsgn-warn-info {
+    background: rgba(100, 160, 255, 0.07);
+    border: 1px solid rgba(100, 160, 255, 0.12);
+}
+
+.dsgn-warn-icon {
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.dsgn-warn-msg {
+    color: var(--text-primary, #fff);
+    font-size: 11px;
+}
+
+.dsgn-warn-fix {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* ── Toolbar tab tweaks ── */
+.designer-toolbar-tabs {
+    gap: 2px;
+}
+
+.dsgn-tab-sm {
+    font-size: 10.5px !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1180px) {
+    .dsgn-main {
+        grid-template-columns: 190px 1fr 256px;
+        gap: 10px;
+        padding: 10px 12px 8px;
+    }
+}
+
+@media (max-width: 920px) {
+    .dsgn-main {
+        grid-template-columns: 170px 1fr 230px;
+        gap: 8px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 760px) {
+    .dsgn-main {
+        grid-template-columns: 1fr;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .dsgn-left {
+        display: none;
+    }
+
+    .dsgn-right {
+        max-height: 260px;
+    }
+
+    .dsgn-filmstrip-bar {
+        height: 76px;
+    }
+}

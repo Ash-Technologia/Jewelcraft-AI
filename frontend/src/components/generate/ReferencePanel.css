@@ -1,0 +1,142 @@
+/* ReferencePanel.css */
+
+.refp-root {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.refp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(201, 168, 76, 0.05);
+}
+
+.refp-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.refp-header-icon {
+    color: var(--gold);
+}
+
+.refp-title {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.refp-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.refp-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.refp-preview {
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.refp-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.refp-style-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+}
+
+.refp-style-btn:hover {
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.1));
+    border-color: var(--gold);
+}
+
+.refp-style-btn svg {
+    color: var(--gold);
+}
+
+.refp-action-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.refp-action-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.refp-components-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+}
+
+.refp-components-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.refp-comp-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+    font-size: 12px;
+}
+
+.refp-comp-btn:hover,
+.refp-comp-btn.hovered {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.1);
+}
+
+.refp-comp-icon {
+    font-size: 16px;
+}
+
+.refp-comp-label {
+    flex: 1;
+}
+
+.refp-comp-copy {
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.refp-comp-btn:hover .refp-comp-copy {
+    opacity: 1;
+}

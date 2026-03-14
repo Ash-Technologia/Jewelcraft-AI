@@ -1,0 +1,123 @@
+.mfg-root {
+    background: rgba(13, 13, 26, 0.85);
+    background: linear-gradient(165deg, rgba(20, 20, 40, 0.85) 0%, rgba(10, 10, 25, 0.95) 100%);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+}
+
+.mfg-root:hover {
+    border-color: rgba(0, 242, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mfg-root.expanded {
+    background: linear-gradient(165deg, rgba(25, 25, 50, 0.9) 0%, rgba(15, 15, 35, 1) 100%);
+}
+
+.mfg-main-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mfg-dial {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+}
+
+.mfg-score-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mfg-score-num {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.mfg-info {
+    flex: 1;
+}
+
+.mfg-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.mfg-status {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.mfg-toggle {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.mfg-details {
+    overflow: hidden;
+}
+
+.mfg-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 12px 0;
+}
+
+.mfg-section {
+    margin-bottom: 12px;
+}
+
+.mfg-section-title {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+.mfg-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.mfg-detail-row.error {
+    background: rgba(255, 80, 80, 0.08);
+    color: #ff8080;
+    border: 1px solid rgba(255, 80, 80, 0.15);
+}
+
+.mfg-detail-row.tip {
+    background: rgba(0, 242, 255, 0.06);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 255, 0.12);
+}
+
+.mfg-detail-row.success {
+    background: rgba(80, 255, 120, 0.08);
+    color: var(--accent-green);
+    border: 1px solid rgba(80, 255, 120, 0.15);
+}

@@ -1,0 +1,109 @@
+/* ComponentTree.css */
+
+/* ── Root ── */
+.ctree-root {
+    padding: 12px 10px;
+}
+
+/* ── Header label ── */
+.ctree-header {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0 4px;
+}
+
+/* ── Ring (type) node ── */
+.ctree-type-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    margin-bottom: 2px;
+}
+
+.ctree-type-icon {
+    font-size: 16px;
+}
+
+.ctree-type-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent-cyan);
+}
+
+.ctree-active-badge {
+    font-size: 9px;
+    margin-left: auto;
+}
+
+/* ── Component button ── */
+.ctree-comp-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-left: 16px;
+    transition: background 0.15s;
+    /* borderLeft color is data-driven — kept as inline style */
+}
+
+.ctree-comp-icon {
+    font-size: 11px;
+    /* color is data-driven per component — kept as inline style */
+}
+
+.ctree-comp-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    flex: 1;
+    text-align: left;
+}
+
+.ctree-chevron {
+    color: var(--text-muted);
+}
+
+/* ── Detail rows ── */
+.ctree-details {
+    /* marginLeft, borderLeft color are data-driven — kept as inline style */
+    margin-left: 24px;
+    padding-left: 12px;
+    overflow: hidden;
+}
+
+.ctree-detail-row {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 2px 0;
+}
+
+/* ── Quick presets ── */
+.ctree-presets {
+    margin-top: 16px;
+    padding: 12px 8px;
+    border-top: 1px solid var(--border-default);
+}
+
+.ctree-presets-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.ctree-preset-btn {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 11px;
+    margin-bottom: 4px;
+}

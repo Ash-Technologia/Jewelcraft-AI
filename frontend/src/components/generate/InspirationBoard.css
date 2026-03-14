@@ -1,0 +1,87 @@
+/* InspirationBoard.css */
+
+.ib-root {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.ib-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.ib-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ib-header-icon {
+    color: var(--gold);
+}
+
+.ib-title {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.ib-count {
+    font-size: 11px;
+}
+
+.ib-pins {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px 20px;
+}
+
+.ib-pin {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    min-width: 160px;
+}
+
+.ib-pin-icon {
+    font-size: 20px;
+}
+
+.ib-pin-info {
+    flex: 1;
+}
+
+.ib-pin-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.ib-pin-source {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.ib-pin-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.ib-pin-remove:hover {
+    background: rgba(255, 100, 100, 0.15);
+    color: var(--accent-rose);
+}

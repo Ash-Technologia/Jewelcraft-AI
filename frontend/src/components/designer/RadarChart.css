@@ -1,0 +1,40 @@
+/* RadarChart.css */
+
+.radar-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.radar-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-pure);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.radar-values {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.radar-val-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+}
+
+.radar-val-key {
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.radar-val-num {
+    color: var(--gold-pure);
+    font-weight: 700;
+}

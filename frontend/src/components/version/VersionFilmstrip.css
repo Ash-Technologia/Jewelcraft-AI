@@ -1,0 +1,122 @@
+/* VersionFilmstrip.css */
+
+/* ── Root ── */
+.vf-root {
+    padding: 8px 12px;
+}
+
+/* ── Header row ── */
+.vf-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.vf-header-icon {
+    color: var(--accent-cyan);
+}
+
+.vf-header-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+
+.vf-count-badge {
+    margin-left: 4px;
+    font-size: 10px;
+}
+
+.vf-frozen-badge {
+    background: rgba(0, 242, 255, 0.15);
+    color: var(--accent-cyan);
+    border-color: rgba(0, 242, 255, 0.3);
+    font-size: 10px;
+}
+
+.vf-snapshot-btn {
+    font-size: 11px;
+    margin-left: auto;
+}
+
+/* ── Empty state ── */
+.vf-empty {
+    text-align: center;
+    padding: 8px 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* ── Filmstrip card thumbnail ── */
+.vf-thumb {
+    height: 60px;
+    position: relative;
+    background: var(--thumb-bg);
+}
+
+/* ── Change-type indicator dot ── */
+.vf-dot {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+}
+
+/* ── Version number label ── */
+.vf-version-num {
+    position: absolute;
+    bottom: 2px;
+    left: 4px;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+/* ── Card label ── */
+.vf-card-label {
+    padding: 4px 5px;
+    font-size: 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* color/fontWeight depend on isActive — kept as inline style */
+}
+
+/* ── Hover tooltip positioning ── */
+.vf-tooltip {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6px;
+    width: 160px;
+}
+
+.vf-tooltip-title {
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: 11px;
+}
+
+.vf-tooltip-summary {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.vf-tooltip-meta {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+.vf-tooltip-price {
+    color: var(--accent-cyan);
+}
+
+.vf-tooltip-score {
+    color: var(--accent-green);
+}

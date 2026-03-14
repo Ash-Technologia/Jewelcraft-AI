@@ -1,0 +1,113 @@
+/* AnalysisOverlay.css */
+
+/* ── Root layer ── */
+.ao-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* ── Confidence badge ── */
+.ao-confidence {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+}
+
+/* ── Annotation anchor (positioned per component.position) ── */
+.ao-annotation {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    cursor: pointer;
+    left: var(--pos-x);
+    top: var(--pos-y);
+}
+
+/* ── Type dot ── */
+.ao-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: default;
+    background: var(--comp-color);
+    box-shadow: 0 0 8px var(--comp-color);
+}
+
+/* ── Label tooltip ── */
+.ao-label {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-size: 9px;
+    color: white;
+    white-space: nowrap;
+    border: 1px solid var(--comp-border);
+}
+
+/* ── Bounding box ── */
+.ao-bound {
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(61, 214, 140, 0.4);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+/* ── Hover tooltip ── */
+.ao-tooltip {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.92);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.ao-annotation:hover .ao-tooltip {
+    opacity: 1;
+}
+
+.ao-tooltip-title {
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: capitalize;
+    margin-bottom: 4px;
+    font-size: 11px;
+}
+
+.ao-tooltip-row {
+    color: var(--text-muted);
+}
+
+.ao-tooltip-row span {
+    color: var(--text-primary);
+    text-transform: capitalize;
+}
