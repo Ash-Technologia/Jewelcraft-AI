@@ -14,7 +14,7 @@ import toast from 'react-hot-toast'
 import './AgentPanel.css'
 import type { DesignParams } from '../../store/useAppStore'
 
-const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
 
 // ── TYPES ─────────────────────────────────────────────────────
 interface DiffEntry { from: unknown; to: unknown }

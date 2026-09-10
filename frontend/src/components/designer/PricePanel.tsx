@@ -2,7 +2,7 @@ import { useMemo, useEffect } from 'react'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Legend } from 'recharts'
 import { Activity } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
-import { TREND_DATA, COMPETITOR_DATA, METAL_PRICES, STONE_PRICES } from '../../data/catalog'
+import { TREND_DATA, COMPETITOR_DATA, METAL_PRICES, STONE_PRICES, TrendItem, CompetitorItem } from '../../data/marketPricing'
 import './PricePanel.css'
 
 function cosineSim(a: Record<string, number>, b: Record<string, number>) {
@@ -101,13 +101,13 @@ export default function PricePanel() {
     const budgetPct = Math.min((totalPrice / budget) * 100, 150)
 
     // Style analytics
-    const trends = useMemo(() => TREND_DATA.map(t => ({
+    const trends = useMemo(() => TREND_DATA.map((t: TrendItem) => ({
         ...t, score: Math.round(cosineSim(p.style_dna, t.style_dna) * 100),
-    })).sort((a, b) => b.score - a.score).slice(0, 3), [p.style_dna])
+    })).sort((a: { score: number }, b: { score: number }) => b.score - a.score).slice(0, 3), [p.style_dna])
 
-    const competitors = useMemo(() => COMPETITOR_DATA.map(c => ({
+    const competitors = useMemo(() => COMPETITOR_DATA.map((c: CompetitorItem) => ({
         ...c, score: Math.round(cosineSim(p.style_dna, c.style_dna) * 100),
-    })).filter(c => c.score >= 65).sort((a, b) => b.score - a.score).slice(0, 2), [p.style_dna])
+    })).filter((c: { score: number }) => c.score >= 65).sort((a: { score: number }, b: { score: number }) => b.score - a.score).slice(0, 2), [p.style_dna])
 
     const radarData = Object.entries(p.style_dna).map(([key, val]) => ({
         axis: key.charAt(0).toUpperCase() + key.slice(1),
@@ -211,7 +211,7 @@ export default function PricePanel() {
             {/* Trend Match */}
             <div className="pp-trend-section">
                 <div className="pp-label">Trend Match 2025/2026</div>
-                {trends.map(t => (
+                {trends.map((t: { name: string; description?: string; score: number }) => (
                     <div key={t.name} className="pp-trend-row">
                         <div className="pp-trend-info">
                             <div className="pp-trend-name">{t.name}</div>
@@ -226,7 +226,7 @@ export default function PricePanel() {
             {competitors.length > 0 && (
                 <div>
                     <div className="pp-label">Style Similar To</div>
-                    {competitors.map(c => (
+                    {competitors.map((c: { name: string; brand?: string; score: number }) => (
                         <div key={c.name} className="pp-competitor-row">
                             <div className="pp-competitor-info">
                                 <div className="pp-competitor-name">{c.name}</div>

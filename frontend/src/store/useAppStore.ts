@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { fetchMetalPrices, LivePrices } from '../api/metalPriceService'
 
 export type Gender = 'womens' | 'mens' | 'unisex'
-export type Page = 'generate' | 'designer' | 'catalog' | 'export' | 'client'
+export type Page = 'generate' | 'designer' | 'export' | 'client'
 
 export interface DesignParams {
     type?: string
@@ -109,6 +109,12 @@ interface AppStore {
     fetchLivePrices: () => Promise<void>
     useLivePrices: boolean
     setUseLivePrices: (val: boolean) => void
+    active3DModelUrl: string | null
+    active3DObjUrl: string | null
+    activePieceName: string | null
+    colorMode: 'original' | 'recolored'
+    setActive3DModel: (glbUrl: string | null, objUrl?: string | null, name?: string | null) => void
+    setColorMode: (mode: 'original' | 'recolored') => void
 }
 
 export const useAppStore = create<AppStore>()((set) => ({
@@ -159,4 +165,15 @@ export const useAppStore = create<AppStore>()((set) => ({
     },
     useLivePrices: true,
     setUseLivePrices: (val) => set({ useLivePrices: val }),
+    active3DModelUrl: null,
+    active3DObjUrl: null,
+    activePieceName: null,
+    colorMode: 'original',
+    setActive3DModel: (glbUrl, objUrl = null, name = null) => set({
+        active3DModelUrl: glbUrl,
+        active3DObjUrl: objUrl,
+        activePieceName: name,
+        hasDesignLoaded: Boolean(glbUrl)
+    }),
+    setColorMode: (mode) => set({ colorMode: mode }),
 }))

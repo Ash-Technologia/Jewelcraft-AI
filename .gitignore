@@ -1,7 +1,28 @@
 node_modules/
-.env
 dist/
 build/
 coverage/
 .DS_Store
 *.log
+
+# Environment files — NEVER commit these!
+.env
+.env.local
+.env.production
+backend/.env
+frontend/.env
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+.Python
+*.egg-info/
+
+# Backend uploads (user images, exported models)
+backend/uploads/
+backend/exports/
+
+# OS artifacts
+Thumbs.db

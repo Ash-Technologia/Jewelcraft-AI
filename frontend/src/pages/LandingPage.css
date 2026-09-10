@@ -1,0 +1,977 @@
+/* ─────────────────────────────────────────────────────────────
+   JewelCraft AI — Luxury Landing Page (LandingPage.css)
+   Haute Joaillerie Place Vendôme Architecture
+   ───────────────────────────────────────────────────────────── */
+
+.landing-container {
+    min-height: 100vh;
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 80px;
+}
+
+/* ── Global Section Base ── */
+.land-section {
+    padding: 100px 24px;
+    max-width: 1320px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.land-section-header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 60px;
+}
+
+.land-section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.land-section-badge.gold {
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: var(--gold-bright);
+}
+
+.land-section-badge.danger {
+    background: rgba(220, 70, 70, 0.08);
+    border: 1px solid rgba(220, 70, 70, 0.25);
+    color: #E57373;
+}
+
+.land-section-badge.success {
+    background: rgba(78, 154, 112, 0.08);
+    border: 1px solid rgba(78, 154, 112, 0.25);
+    color: #8FD8A0;
+}
+
+.land-section-title {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #FAF8F5;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+.land-section-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+/* ══════════════════════════════════════════════════════════
+   1. HERO SECTION
+   ══════════════════════════════════════════════════════════ */
+.land-hero {
+    position: relative;
+    padding: 60px 24px 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.land-hero-glow {
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(197, 160, 89, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    filter: blur(80px);
+}
+
+.land-hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .land-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+.land-hero-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.land-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: var(--gold-bright);
+    margin-bottom: 24px;
+    width: fit-content;
+}
+
+.land-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    box-shadow: 0 0 8px var(--gold-bright);
+}
+
+.land-hero-title {
+    font-family: var(--font-display);
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 1.12;
+    color: #FAF8F5;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+    .land-hero-title {
+        font-size: 38px;
+    }
+}
+
+.land-gold-text {
+    background: linear-gradient(135deg, #FFFFFF 15%, #F3DEAB 50%, #C5A059 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.land-hero-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+    max-width: 580px;
+}
+
+.land-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+}
+
+.land-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0E0D0A;
+    background: linear-gradient(135deg, #F3DEAB 0%, #C5A059 50%, #B89243 100%);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(197, 160, 89, 0.35);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
+
+.land-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(197, 160, 89, 0.5);
+}
+
+.land-btn-primary.large {
+    padding: 16px 36px;
+    font-size: 16px;
+}
+
+.land-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FAF8F5;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.land-btn-secondary:hover {
+    background: rgba(197, 160, 89, 0.08);
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+}
+
+/* ── Hero Trust Metrics ── */
+.land-hero-metrics {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: rgba(20, 19, 16, 0.6);
+    border: 1px solid rgba(197, 160, 89, 0.15);
+    backdrop-filter: blur(12px);
+    flex-wrap: wrap;
+}
+
+.land-metric-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.land-metric-number {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    line-height: 1.1;
+}
+
+.land-metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.land-metric-sep {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Hero 3D Stage ── */
+.land-hero-stage-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.land-stage-frame {
+    background: rgba(18, 17, 14, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.28);
+    border-radius: 24px;
+    padding: 18px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(197, 160, 89, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.land-stage-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.5), transparent);
+}
+
+.land-stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 0 6px;
+}
+
+.land-stage-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #FAF8F5;
+}
+
+.land-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8FD8A0;
+    box-shadow: 0 0 8px #8FD8A0;
+}
+
+.land-stage-badge {
+    font-size: 11px;
+    color: var(--gold-warm);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.land-stage-portal-card {
+    background: radial-gradient(circle at 50% 20%, rgba(35, 30, 22, 0.95) 0%, rgba(14, 13, 10, 0.98) 100%);
+    border: 1px solid rgba(197, 160, 89, 0.22);
+    border-radius: 18px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.land-stage-portal-card:hover {
+    border-color: rgba(197, 160, 89, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 35px rgba(197, 160, 89, 0.12);
+}
+
+.land-portal-glow {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.25) 0%, transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+.land-portal-icon-ring {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(197, 160, 89, 0.15) 0%, rgba(14, 13, 10, 0.8) 100%);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(197, 160, 89, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.land-stage-portal-card:hover .land-portal-icon-ring {
+    transform: scale(1.08) rotate(6deg);
+}
+
+.land-portal-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #FAF8F5;
+    margin-bottom: 12px;
+    font-family: 'Playfair Display', serif;
+}
+
+.land-portal-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 440px;
+}
+
+.land-portal-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 26px;
+    text-align: left;
+}
+
+.land-portal-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+}
+
+.land-portal-step:hover {
+    background: rgba(197, 160, 89, 0.06);
+    border-color: rgba(197, 160, 89, 0.2);
+}
+
+.land-step-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-warm);
+    letter-spacing: 0.5px;
+    padding: 3px 7px;
+    background: rgba(197, 160, 89, 0.12);
+    border-radius: 6px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.land-step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.land-step-info strong {
+    font-size: 12.5px;
+    color: #FAF8F5;
+    font-weight: 600;
+}
+
+.land-step-info span {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.land-portal-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #F3DEAB 0%, #C5A059 100%);
+    color: #0E0D0A;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.land-stage-portal-card:hover .land-portal-cta-btn {
+    background: linear-gradient(135deg, #FFF 0%, #E2BA69 100%);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+}
+
+.land-stage-btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.land-stage-btn:hover {
+    color: #FAF8F5;
+    border-color: rgba(197, 160, 89, 0.3);
+}
+
+.land-stage-btn.active {
+    color: #0E0D0A;
+    background: var(--gold-bright);
+    border-color: var(--gold-bright);
+}
+
+/* ══════════════════════════════════════════════════════════
+   2. PROBLEM SECTION
+   ══════════════════════════════════════════════════════════ */
+.land-problem-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.land-problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.land-problem-card {
+    background: rgba(20, 18, 16, 0.65);
+    border: 1px solid rgba(220, 70, 70, 0.2);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.land-problem-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(220, 70, 70, 0.4);
+}
+
+.land-problem-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(220, 70, 70, 0.08);
+    border: 1px solid rgba(220, 70, 70, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.text-danger {
+    color: #E57373;
+}
+
+.land-card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #FAF8F5;
+    margin-bottom: 12px;
+    line-height: 1.25;
+}
+
+.land-card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.land-card-footer {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ══════════════════════════════════════════════════════════
+   3. SOLUTION SECTION
+   ══════════════════════════════════════════════════════════ */
+.land-solution-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.land-solution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.land-solution-card {
+    background: rgba(20, 19, 16, 0.82);
+    border: 1px solid rgba(197, 160, 89, 0.22);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.land-solution-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-bright);
+    box-shadow: 0 12px 32px rgba(197, 160, 89, 0.12);
+}
+
+.land-solution-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   4. WORKFLOW SECTION
+   ══════════════════════════════════════════════════════════ */
+.land-workflow-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.land-flow-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+}
+
+@media (max-width: 1024px) {
+    .land-flow-track {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .land-flow-track {
+        grid-template-columns: 1fr;
+    }
+}
+
+.land-flow-step {
+    background: rgba(20, 19, 16, 0.75);
+    border: 1px solid rgba(197, 160, 89, 0.18);
+    border-radius: 20px;
+    padding: 30px 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(14px);
+}
+
+.land-step-number {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    opacity: 0.85;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.land-step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    margin-bottom: 16px;
+    box-shadow: 0 0 10px var(--gold-bright);
+}
+
+.land-step-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: #FAF8F5;
+    margin-bottom: 10px;
+}
+
+.land-step-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.land-step-pill {
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    color: var(--gold-warm);
+}
+
+/* ══════════════════════════════════════════════════════════
+   5. FEATURES SUITE
+   ══════════════════════════════════════════════════════════ */
+.land-features-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.land-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 28px;
+}
+
+.land-feature-card {
+    background: rgba(20, 19, 16, 0.82);
+    border: 1px solid rgba(197, 160, 89, 0.18);
+    border-radius: 20px;
+    padding: 32px 28px;
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.land-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-border-strong);
+}
+
+.land-feat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.land-feat-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #FAF8F5;
+    margin-bottom: 12px;
+}
+
+.land-feat-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.land-feat-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.land-feat-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.land-feat-bullets li svg {
+    color: var(--gold-bright);
+    flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   6. COMPARISON TABLE
+   ══════════════════════════════════════════════════════ */
+.land-compare-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.land-table-card {
+    background: rgba(20, 19, 16, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.24);
+    border-radius: 20px;
+    overflow-x: auto;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.land-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.land-compare-table th {
+    padding: 18px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.land-compare-table th.highlight {
+    color: var(--gold-bright);
+    background: rgba(197, 160, 89, 0.06);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.land-compare-table td {
+    padding: 16px 24px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.land-compare-table tr:last-child td {
+    border-bottom: none;
+}
+
+.land-compare-table td.highlight-val {
+    color: var(--gold-bright);
+    font-weight: 600;
+    background: rgba(197, 160, 89, 0.04);
+}
+
+/* ══════════════════════════════════════════════════════════
+   7. FINAL CTA
+   ══════════════════════════════════════════════════════════ */
+.land-cta-section {
+    padding: 60px 24px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.land-cta-card {
+    position: relative;
+    background: radial-gradient(circle at center, #24211A 0%, #12110E 100%);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 28px;
+    padding: 64px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 50px rgba(197, 160, 89, 0.12);
+    overflow: hidden;
+}
+
+.land-cta-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(197, 160, 89, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    filter: blur(50px);
+}
+
+.land-cta-title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    color: #FAF8F5;
+    margin-bottom: 16px;
+    line-height: 1.15;
+}
+
+@media (max-width: 768px) {
+    .land-cta-title {
+        font-size: 32px;
+    }
+}
+
+.land-cta-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+}
+
+.land-cta-actions {
+    display: flex;
+    gap: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   8. FOOTER
+   ══════════════════════════════════════════════════════ */
+.land-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #090807;
+    padding: 60px 24px 36px;
+}
+
+.land-footer-inner {
+    max-width: 1320px;
+    margin: 0 auto 48px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.land-footer-brand {
+    max-width: 380px;
+}
+
+.land-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: #FAF8F5;
+    margin-bottom: 12px;
+}
+
+.land-footer-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.land-footer-links {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.land-link-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.land-col-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.land-link-col button,
+.land-link-col span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.2s ease;
+}
+
+.land-link-col button:hover {
+    color: var(--gold-bright);
+}
+
+.land-footer-bottom {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.land-footer-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    color: var(--gold-warm);
+    font-size: 11px;
+    font-weight: 600;
+}

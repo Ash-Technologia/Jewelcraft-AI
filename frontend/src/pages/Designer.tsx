@@ -22,7 +22,11 @@ type RenderMode = 'pbr' | 'clay' | 'wireframe'
 type LightPreset = 'studio' | 'showroom' | 'dramatic'
 
 export default function Designer() {
-    const { currentParams, setCurrentParams, addVersion, versions, isSandboxMode, setSandboxMode, hasDesignLoaded, setHasDesignLoaded } = useAppStore()
+    const {
+        currentParams, setCurrentParams, addVersion, versions,
+        isSandboxMode, setSandboxMode, hasDesignLoaded, setHasDesignLoaded,
+        active3DModelUrl, colorMode
+    } = useAppStore()
     const previousParams = versions.length > 0 ? versions[versions.length - 1].params : undefined
     const [renderMode, setRenderMode] = useState<RenderMode>('pbr')
     const [lightPreset, setLightPreset] = useState<LightPreset>('showroom')
@@ -223,6 +227,8 @@ export default function Designer() {
                             lightPreset={lightPreset}
                             autoRotate
                             hiddenParts={hiddenParts}
+                            modelUrl={active3DModelUrl || '/models/sample-ring.glb'}
+                            colorMode={colorMode}
                         />
                         <div className="dsgn-score-overlay">
                             <ManufactureScore score={mfgScore} params={currentParams} />

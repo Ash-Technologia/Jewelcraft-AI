@@ -1,55 +1,89 @@
 /**
  * JewelCraft AI — Frontend API Client
  * Connects to the backend REST API and WebSocket for real-time events.
+ *
+ * Config is driven by Vite env vars:
+ *   VITE_API_URL  — defaults to http://localhost:8000/api  (FastAPI default port)
+ *   VITE_WS_URL   — defaults to ws://localhost:8000/ws
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
-const WS_BASE = import.meta.env.VITE_WS_URL || 'ws://localhost:3001/ws'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const WS_BASE  = import.meta.env.VITE_WS_URL  || 'ws://localhost:8000/ws'
 
-// ── WebSocket Manager ──
+// ── WebSocket Manager ──────────────────────────────────────────────────────────
 
 type EventHandler = (data: unknown) => void
 const eventHandlers: Map<string, Set<EventHandler>> = new Map()
-let ws: WebSocket | null = null
-let wsReconnectTimer: ReturnType<typeof setTimeout> | null = null
 
-export function connectWebSocket() {
-    if (ws?.readyState === WebSocket.OPEN) return
+let ws: WebSocket | null = null
+let wsSessionId: string | null = null
+let wsReconnectTimer: ReturnType<typeof setTimeout> | null = null
+let wsReconnectAttempts = 0
+const MAX_RECONNECT_ATTEMPTS = 5
+
+export function connectWebSocket(sessionId?: string) {
+    const sid = sessionId || wsSessionId
+    if (!sid) return   // Need a session ID to connect to /ws/{session_id}
+
+    // If already connected to the same session, skip
+    if (ws?.readyState === WebSocket.OPEN && wsSessionId === sid) return
+
+    // Close previous connection if switching sessions
+    if (ws && wsSessionId !== sid) {
+        ws.close()
+        ws = null
+    }
+
+    wsSessionId = sid
 
     try {
-        ws = new WebSocket(WS_BASE)
+        ws = new WebSocket(`${WS_BASE}/${sid}`)
 
         ws.onopen = () => {
-            console.log('[WS] Connected to backend')
+            console.log(`[WS] Connected to session ${sid}`)
+            wsReconnectAttempts = 0
             if (wsReconnectTimer) {
                 clearTimeout(wsReconnectTimer)
                 wsReconnectTimer = null
             }
+            // Dispatch connected event
+            const handlers = eventHandlers.get('connected')
+            handlers?.forEach(h => h({ session_id: sid }))
         }
 
         ws.onmessage = (event) => {
             try {
-                const { event: eventName, data } = JSON.parse(event.data)
-                const handlers = eventHandlers.get(eventName)
-                if (handlers) {
-                    handlers.forEach(h => h(data))
+                const msg = JSON.parse(event.data)
+                // Backend sends: { type: "...", ...data }
+                const eventName = msg.type || msg.event
+                if (eventName) {
+                    const handlers = eventHandlers.get(eventName)
+                    handlers?.forEach(h => h(msg))
                 }
+                // Also dispatch raw 'message' event
+                const rawHandlers = eventHandlers.get('message')
+                rawHandlers?.forEach(h => h(msg))
             } catch (e) {
                 console.warn('[WS] Failed to parse message:', e)
             }
         }
 
-        ws.onclose = () => {
-            console.log('[WS] Disconnected, reconnecting in 3s...')
-            wsReconnectTimer = setTimeout(connectWebSocket, 3000)
+        ws.onclose = (event) => {
+            console.log(`[WS] Disconnected (code ${event.code})`)
+            ws = null
+            if (wsReconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                const delay = Math.min(1000 * Math.pow(2, wsReconnectAttempts), 10000)
+                wsReconnectAttempts++
+                wsReconnectTimer = setTimeout(() => connectWebSocket(sid), delay)
+            }
         }
 
-        ws.onerror = () => {
-            // Will trigger onclose, which handles reconnection
+        ws.onerror = (err) => {
+            console.warn('[WS] Connection error:', err)
+            // onclose will handle reconnection
         }
     } catch {
-        // Backend may not be running — continue with mock mode
-        console.warn('[WS] Could not connect to backend, using mock mode')
+        console.warn('[WS] Could not connect to backend WebSocket, using mock mode')
     }
 }
 
@@ -59,43 +93,86 @@ export function onWsEvent(event: string, handler: EventHandler) {
     }
     eventHandlers.get(event)!.add(handler)
 
-    // Return unsubscribe function
     return () => {
         eventHandlers.get(event)?.delete(handler)
     }
+}
+
+export function sendWsMessage(data: Record<string, unknown>) {
+    if (ws?.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(data))
+        return true
+    }
+    return false
 }
 
 export function isBackendConnected(): boolean {
     return ws?.readyState === WebSocket.OPEN
 }
 
-// ── REST API helpers ──
+export function disconnectWebSocket() {
+    if (ws) {
+        ws.close()
+        ws = null
+    }
+    if (wsReconnectTimer) {
+        clearTimeout(wsReconnectTimer)
+        wsReconnectTimer = null
+    }
+}
+
+// ── REST API helpers ───────────────────────────────────────────────────────────
+
+async function apiRequest<T>(
+    path: string,
+    options: RequestInit = {},
+    retries = 2
+): Promise<T> {
+    const url = `${API_BASE}${path}`
+    let lastError: Error = new Error('Unknown error')
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...(options.headers || {}),
+                },
+            })
+            if (!response.ok) {
+                const body = await response.text().catch(() => '')
+                throw new Error(`API ${response.status}: ${body || response.statusText}`)
+            }
+            return response.json()
+        } catch (err) {
+            lastError = err instanceof Error ? err : new Error(String(err))
+            if (attempt < retries) {
+                await new Promise(r => setTimeout(r, 500 * (attempt + 1)))
+            }
+        }
+    }
+    throw lastError
+}
 
 async function apiPost<T>(path: string, body: unknown): Promise<T> {
-    const response = await fetch(`${API_BASE}${path}`, {
+    return apiRequest<T>(path, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
     })
-    if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`)
-    }
-    return response.json()
 }
 
-async function apiPostFile<T>(path: string, formData: FormData): Promise<T> {
-    const response = await fetch(`${API_BASE}${path}`, {
-        method: 'POST',
-        body: formData,
-    })
-    if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`)
-    }
-    return response.json()
+async function apiPostForm<T>(path: string, formData: FormData): Promise<T> {
+    return apiRequest<T>(path, { method: 'POST', body: formData })
+}
+
+async function apiGet<T>(path: string): Promise<T> {
+    return apiRequest<T>(path, { method: 'GET' })
 }
 
 async function apiPostBlob(path: string, body: unknown): Promise<Blob> {
-    const response = await fetch(`${API_BASE}${path}`, {
+    const url = `${API_BASE}${path}`
+    const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -106,36 +183,91 @@ async function apiPostBlob(path: string, body: unknown): Promise<Blob> {
     return response.blob()
 }
 
-// ── API Functions ──
+// ── API Functions ──────────────────────────────────────────────────────────────
 
-/** Upload an image for vision analysis */
-export async function analyzeImage(file: File) {
+/** Upload a jewelry image for AI vision analysis.
+ *  Backend: POST /api/analyze (form: file, session_id)
+ */
+export async function analyzeImage(file: File, sessionId?: string) {
     const formData = new FormData()
-    formData.append('image', file)
-    return apiPostFile<{
-        success: boolean
+    formData.append('file', file)
+    if (sessionId) formData.append('session_id', sessionId)
+    return apiPostForm<{
+        session_id: string
         analysis: AnalysisResult
-        mock?: boolean
+        design?: ConceptResult
+        params?: Record<string, unknown>
+        ai_used: string
     }>('/analyze', formData)
 }
 
-/** Generate 3 parametric concepts from analysis */
-export async function generateConcepts(analysis: AnalysisResult, personas?: string[]) {
-    return apiPost<{
-        success: boolean
+/** Get exact 1:1 CAD design for a session.
+ *  Backend: POST /api/generate (form: session_id)
+ */
+export async function generateConcepts(sessionId: string) {
+    const formData = new FormData()
+    formData.append('session_id', sessionId)
+    return apiPostForm<{
+        session_id: string
+        design?: ConceptResult
         concepts: ConceptResult[]
-    }>('/generate', { analysis, personas })
+        count: number
+        ai_used: string
+    }>('/generate', formData)
 }
 
-/** Send a natural language instruction to the AI agent */
-export async function sendAgentMessage(message: string, currentParams: unknown, sessionHistory?: Array<{ role: string; text: string }>) {
+/** Generate exact 1:1 parametric 3D CAD design directly from a natural language prompt.
+ *  Backend: POST /api/generate-from-prompt (body: { prompt, session_id? })
+ */
+export async function generateFromPrompt(prompt: string, sessionId?: string) {
+    return apiPost<{
+        session_id: string
+        prompt: string
+        design?: ConceptResult
+        params?: Record<string, unknown>
+        concepts: ConceptResult[]
+        count: number
+        ai_used: string
+    }>('/generate-from-prompt', { prompt, session_id: sessionId })
+}
+
+/** Generate real 3D .GLB and .OBJ mesh from an image using Hugging Face TripoSR.
+ *  Backend: POST /api/generate-3d/image (form: file, session_id)
+ */
+export async function generate3DFromImage(file?: File, sessionId?: string) {
+    const formData = new FormData()
+    if (file) formData.append('file', file)
+    if (sessionId) formData.append('session_id', sessionId)
+    return apiPostForm<{
+        success: boolean
+        glb_url?: string
+        obj_url?: string
+        source?: string
+        error?: string
+    }>('/generate-3d/image', formData)
+}
+
+/** Generate real 3D mesh from a text prompt using Hugging Face Shap-E.
+ *  Backend: POST /api/generate-3d/text (body: { prompt })
+ */
+export async function generate3DFromText(prompt: string) {
     return apiPost<{
         success: boolean
-        message: string
-        params: unknown
-        summary: string
-        priceChange: number
-    }>('/agent', { message, currentParams, sessionHistory })
+        obj_url?: string
+        source?: string
+        error?: string
+    }>('/generate-3d/text', { prompt })
+}
+
+/** Get live metal prices (backend proxies GoldAPI — avoids CORS) */
+export async function getMetalPrices() {
+    return apiGet<{
+        gold_per_gram: number
+        platinum_per_gram: number
+        silver_per_gram: number
+        timestamp: number
+        source: 'live' | 'cached' | 'fallback'
+    }>('/metal-prices')
 }
 
 /** Export specs PDF */
@@ -158,17 +290,40 @@ export async function exportPackage(params: unknown, designName?: string) {
     return apiPostBlob('/export/package', { params, designName })
 }
 
+/** Budget substitution suggestions */
+export async function getBudgetSuggestions(params: unknown, currentPrice: number, targetBudget: number) {
+    return apiPost<{ suggestions: BudgetSuggestion[]; current_price: number; target_budget: number; within_budget: boolean }>(
+        '/budget-suggest',
+        { params, current_price: currentPrice, target_budget: targetBudget }
+    )
+}
+
+/** Create share link */
+export async function createShare(params: unknown, label?: string, sessionId?: string) {
+    return apiPost<{ share_id: string; url: string }>('/share', { params, label, session_id: sessionId })
+}
+
+/** Get shared design */
+export async function getShare(shareId: string) {
+    return apiGet<{ params: unknown; label: string; created_at: number }>(`/share/${shareId}`)
+}
+
 /** Health check */
-export async function healthCheck() {
+export async function healthCheck(): Promise<{
+    status: string
+    vision_ai: string
+    blender_available: boolean
+} | null> {
     try {
-        const response = await fetch(`${API_BASE}/health`)
-        return response.ok
+        const response = await fetch(`${API_BASE.replace('/api', '')}/health`)
+        if (!response.ok) return null
+        return response.json()
     } catch {
-        return false
+        return null
     }
 }
 
-// ── Download helper ──
+// ── Download helper ────────────────────────────────────────────────────────────
 
 export function downloadBlob(blob: Blob, filename: string) {
     const url = URL.createObjectURL(blob)
@@ -178,42 +333,50 @@ export function downloadBlob(blob: Blob, filename: string) {
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-// ── Types ──
+// ── Types ──────────────────────────────────────────────────────────────────────
 
 export interface AnalysisResult {
-    jewelry_type: string
+    type: string
     confidence: number
-    gender: string
-    metal: { type: string; purity?: string; finish: string }
+    components: Array<{ name: string; type: string; position: { x: number; y: number } }>
+    metal: { type: string; color: string; finish: string; roughness: number }
     stones: Array<{
         type: string
         cut: string
-        count: number
-        estimated_carat: number
-        position: string
-        color_grade?: string
-        clarity?: string
-    }>
-    setting: { type: string; prong_count: number; style: string }
-    band: { width_mm: number; profile: string }
-    halo: { present: boolean; stone_count?: number }
-    style_dna: { romance: number; boldness: number; modernity: number; luxury: number; complexity: number }
-    components: Array<{
-        name: string
-        type: string
+        size: number
         position: { x: number; y: number }
     }>
+    style_dna: { romance: number; boldness: number; modernity: number; luxury: number; complexity: number }
+    session_id?: string
+    ai_used?: string
 }
 
 export interface ConceptResult {
     id: string
-    persona: string
-    label: string
-    params: unknown
-    priceEstimate: number
-    score: number
-    thumbnail: string | null
+    name?: string
+    persona?: string
+    label?: string
+    description?: string
+    metal?: string
+    setting?: string
+    finish?: string
+    priceEstimate?: number
+    manufactureScore?: number
+    color?: string
+    params: Record<string, unknown>
+}
+
+export interface BudgetSuggestion {
+    type: 'stone_substitution' | 'metal_substitution' | 'design_simplification'
+    original?: string
+    substitute?: string
+    change?: string
+    note: string
+    estimated_price?: number
+    savings_pct: number
+    within_budget?: boolean
+    params_patch: Record<string, unknown>
 }

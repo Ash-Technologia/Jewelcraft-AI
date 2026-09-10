@@ -8,110 +8,111 @@
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── BACKGROUNDS ── */
-  --bg-void: #04030F;
-  --bg-obsidian: #080718;
-  --bg-deep: #0C0B1E;
-  --bg-surface: #111028;
-  --bg-raised: #171632;
-  --bg-overlay: rgba(30, 28, 58, 0.6);
-  --bg-glass: rgba(255, 255, 255, 0.04);
-  --bg-glass-hover: rgba(255, 255, 255, 0.08);
+  /* ── BACKGROUNDS (Warm Espresso Obsidian & Place Vendôme Atelier) ── */
+  --bg-void: #090807;
+  --bg-obsidian: #0E0D0B;
+  --bg-deep: #141310;
+  --bg-surface: #191814;
+  --bg-raised: #211F1A;
+  --bg-overlay: rgba(14, 13, 11, 0.75);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --bg-glass-hover: rgba(255, 255, 255, 0.06);
 
-  /* ── GOLD SPECTRUM ── */
-  --gold-pure: #C9A84C;
+  /* ── GOLD SPECTRUM (Refined Antique Brushed Gold & Champagne) ── */
+  --gold-pure: #C5A059;
   --gold-bright: #D4AF37;
-  --gold-warm: #E8C46A;
-  --gold-pale: #F0D080;
-  --gold-dim: #8A6F28;
-  --gold-glow: rgba(201, 168, 76, 0.35);
-  --gold-bg: rgba(201, 168, 76, 0.08);
-  --gold-bg-hover: rgba(201, 168, 76, 0.14);
-  --gold-border: rgba(201, 168, 76, 0.25);
-  --gold-border-strong: rgba(201, 168, 76, 0.55);
+  --gold-warm: #E2C98A;
+  --gold-pale: #F3DEAB;
+  --gold-dim: #8F7238;
+  --gold-glow: rgba(197, 160, 89, 0.2);
+  --gold-bg: rgba(197, 160, 89, 0.08);
+  --gold-bg-hover: rgba(197, 160, 89, 0.14);
+  --gold-border: rgba(197, 160, 89, 0.22);
+  --gold-border-strong: rgba(197, 160, 89, 0.5);
 
   /* ── SILVER / PLATINUM ── */
-  --platinum: #E8E8F2;
-  --silver: #C0C0CC;
-  --moonlight: rgba(232, 232, 242, 0.12);
+  --platinum: #ECEBF0;
+  --silver: #C4C4CD;
+  --moonlight: rgba(236, 235, 240, 0.08);
 
-  /* ── ManualControls Utilities ── */
-.mc-wrap { flex-wrap: wrap; }
-.mc-option-btn { font-size: 10px; border-radius: 8px; padding: 4px 10px; }
-.mc-option-btn-wide { font-size: 11px; min-width: 40px; border-radius: 8px; }
-
-/* ── Auth Page ── */
-  /* ── TEXT ── */
-  --text-primary: #F4F3FF;
-  --text-secondary: rgba(244, 243, 255, 0.55);
-  --text-muted: rgba(244, 243, 255, 0.32);
-  --text-faint: rgba(244, 243, 255, 0.15);
-  --text-gold: #C9A84C;
-  --text-gold-warm: #E8C46A;
+  /* ── TEXT (Warm Alabaster Silk & Cashmere) ── */
+  --text-primary: #FAF8F5;
+  --text-secondary: rgba(250, 248, 245, 0.62);
+  --text-muted: rgba(250, 248, 245, 0.38);
+  --text-faint: rgba(250, 248, 245, 0.16);
+  --text-gold: #C5A059;
+  --text-gold-warm: #E2C98A;
 
   /* ── BORDERS ── */
   --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.12);
-  --border-hover: rgba(255, 255, 255, 0.22);
-  --border-gold: rgba(201, 168, 76, 0.35);
-  --border-gold-active: rgba(201, 168, 76, 0.65);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --border-gold: rgba(197, 160, 89, 0.25);
+  --border-gold-active: rgba(197, 160, 89, 0.6);
 
-  /* ── SEMANTIC ACCENTS ── */
-  --accent-emerald: #2ECC8A;
-  --accent-amber: #F59E0B;
-  --accent-crimson: #E85555;
-  --accent-cyan: #00F2FF;
-  --accent-indigo: #6366F1;
-  --accent-violet: #9B7FE8;
-  --accent-teal: #3DD6C0;
+  /* ── NATURAL GEMOLOGICAL ACCENTS (Zero Neon) ── */
+  --accent-emerald: #4E9A70;
+  --accent-amber: #D19438;
+  --accent-crimson: #BA4343;
+  --accent-cyan: #7E9FA8;
+  --accent-indigo: #7E7C90;
+  --accent-violet: #8D76A5;
+  --accent-teal: #509489;
+  /* ── Extra accents ── */
+  --accent-blue: #5C7F9B;
+  --accent-green: #4E9A70;
+  --accent-silver: #C4C4CD;
+  --accent-purple: #8D76A5;
+  --accent-rose: #D49B8E;
+  --accent-gold: #C5A059;
 
   /* ── METAL SWATCHES ── */
   --metal-yellow-gold: #D4AF37;
   --metal-rose-gold: #E8A090;
-  --metal-white-gold: #E8E8F2;
-  --metal-platinum: #D8D8E8;
-  --metal-silver: #B8B8C8;
-  --metal-titanium: #6B6B7A;
-  --metal-onyx: #1A1A2E;
+  --metal-white-gold: #ECEBF0;
+  --metal-platinum: #E0E0EC;
+  --metal-silver: #C0C0D0;
+  --metal-titanium: #656570;
+  --metal-onyx: #181716;
 
   /* ── STONE COLORS ── */
-  --stone-diamond: #EEF4FF;
-  --stone-ruby: #C0143C;
-  --stone-emerald: #1A7A4A;
-  --stone-sapphire: #0F4C9E;
-  --stone-amethyst: #8B3FBA;
-  --stone-onyx: #1C1C2A;
-  --stone-pearl: #F5F0E8;
-  --stone-opal: #B8D4E8;
+  --stone-diamond: #F5F7FA;
+  --stone-ruby: #A81B34;
+  --stone-emerald: #1B6E45;
+  --stone-sapphire: #1E3F7A;
+  --stone-amethyst: #6F3894;
+  --stone-onyx: #161514;
+  --stone-pearl: #FAF6EF;
+  --stone-opal: #C2D5E0;
 
   /* ── DNA AXIS COLORS ── */
-  --dna-romance: #E8A090;
-  --dna-boldness: #4F8EF7;
-  --dna-modernity: #3DD68C;
-  --dna-luxury: #C9A84C;
-  --dna-complexity: #9B7FE8;
+  --dna-romance: #D49B8E;
+  --dna-boldness: #5C7F9B;
+  --dna-modernity: #509489;
+  --dna-luxury: #C5A059;
+  --dna-complexity: #8D76A5;
 
   /* ── MANUFACTURE SCORE ── */
-  --score-excellent: #2ECC8A;
-  --score-good: #F59E0B;
-  --score-poor: #E85555;
+  --score-excellent: #4E9A70;
+  --score-good: #D19438;
+  --score-poor: #BA4343;
 
   /* ── SHADOWS ── */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 20px 56px rgba(0, 0, 0, 0.65);
-  --shadow-gold: 0 0 32px rgba(201, 168, 76, 0.18);
-  --shadow-gold-strong: 0 0 48px rgba(201, 168, 76, 0.35);
-  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 20px 56px rgba(0, 0, 0, 0.7);
+  --shadow-gold: 0 0 28px rgba(197, 160, 89, 0.12);
+  --shadow-gold-strong: 0 0 40px rgba(197, 160, 89, 0.25);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* ── GRADIENTS ── */
-  --gradient-page: linear-gradient(145deg, #04030F 0%, #080718 35%, #0C0B20 65%, #100E26 100%);
-  --gradient-card: linear-gradient(145deg, #111028 0%, #0E0D24 100%);
+  --gradient-page: linear-gradient(160deg, #090807 0%, #0E0D0B 35%, #13120F 70%, #171512 100%);
+  --gradient-card: linear-gradient(160deg, #191814 0%, #13120F 100%);
   --gradient-gold: linear-gradient(135deg, #C9A84C 0%, #E8C46A 50%, #C9A84C 100%);
   --gradient-gold-dim: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0.05) 100%);
-  --gradient-overlay: linear-gradient(to top, rgba(4, 3, 15, 0.95) 0%, rgba(4, 3, 15, 0.4) 50%, transparent 100%);
-  --gradient-sidebar: linear-gradient(180deg, #0E0D22 0%, #0A0918 100%);
-  --gradient-toolbar: linear-gradient(180deg, rgba(14, 13, 34, 0.98) 0%, rgba(10, 9, 24, 0.95) 100%);
+  --gradient-overlay: linear-gradient(to top, rgba(14, 13, 11, 0.95) 0%, rgba(14, 13, 11, 0.4) 50%, transparent 100%);
+  --gradient-sidebar: linear-gradient(180deg, #141310 0%, #0E0D0B 100%);
+  --gradient-toolbar: linear-gradient(180deg, rgba(20, 19, 16, 0.98) 0%, rgba(14, 13, 11, 0.95) 100%);
 
   /* ── BLUR / GLASS ── */
   --blur-sm: blur(12px);
@@ -137,7 +138,7 @@
   /* ── TYPOGRAPHY ── */
   --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', 'SF Pro Text', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
 
   /* ── Legacy aliases for compatibility ── */
   --bg-primary: var(--bg-void);
@@ -146,10 +147,8 @@
   --glass-bg: rgba(17, 16, 40, 0.82);
   --glass-border: var(--border-default);
   --glass-blur: 24px;
-  --accent-cyan: var(--accent-cyan);
   --accent-gradient: linear-gradient(135deg, #00F2FF 0%, #6366F1 100%);
   --gold: var(--gold-pure);
-  --accent-green: var(--accent-emerald);
 }
 
 /* ── Base Reset ─────────────────────────────────────────── */
@@ -162,6 +161,7 @@
 }
 
 html {
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -193,8 +193,8 @@ body {
   top: -20%;
   left: -20%;
   background:
-    radial-gradient(ellipse 900px 600px at -10% -5%, rgba(100, 60, 200, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 800px 500px at 110% 105%, rgba(201, 168, 76, 0.06) 0%, transparent 60%);
+    radial-gradient(ellipse 900px 600px at -10% -5%, rgba(197, 160, 89, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 500px at 110% 105%, rgba(180, 130, 60, 0.04) 0%, transparent 60%);
   filter: blur(80px);
   animation: bg-drift 30s ease-in-out infinite alternate;
 }
@@ -1210,3 +1210,127 @@ input[type=range]::-webkit-slider-thumb {
   width: 4px;
   color: var(--gold-border);
 }
+
+/* ─────────────────────────────────────────────────────────────
+   ManualControls Utilities (moved out of :root — was invalid)
+   ───────────────────────────────────────────────────────────── */
+.mc-wrap { flex-wrap: wrap; }
+.mc-option-btn { font-size: 10px; border-radius: 8px; padding: 4px 10px; }
+.mc-option-btn-wide { font-size: 11px; min-width: 40px; border-radius: 8px; }
+
+/* ─────────────────────────────────────────────────────────────
+   Premium Utility Classes
+   ───────────────────────────────────────────────────────────── */
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: var(--r-full);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.badge-gold { color: var(--gold-warm); background: var(--gold-bg); border-color: var(--gold-border); }
+.badge-emerald { color: var(--accent-emerald); background: rgba(46, 204, 138, 0.1); border-color: rgba(46, 204, 138, 0.3); }
+.badge-crimson { color: var(--accent-crimson); background: rgba(232, 85, 85, 0.1); border-color: rgba(232, 85, 85, 0.3); }
+.badge-cyan { color: var(--accent-cyan); background: rgba(0, 242, 255, 0.1); border-color: rgba(0, 242, 255, 0.3); }
+.badge-violet { color: var(--accent-violet); background: rgba(155, 127, 232, 0.1); border-color: rgba(155, 127, 232, 0.3); }
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border-default) 20%, var(--border-gold) 50%, var(--border-default) 80%, transparent 100%);
+  margin: 20px 0;
+}
+.divider-sm { margin: 12px 0; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-raised) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-sm);
+}
+
+/* AI status dot */
+.ai-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ai-dot-live { background: var(--accent-emerald); box-shadow: 0 0 8px var(--accent-emerald); animation: pulse-gold 2s infinite; }
+.ai-dot-mock { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
+.ai-dot-offline { background: var(--text-muted); }
+
+/* Glow card */
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, var(--gold-border) 0%, transparent 50%, var(--gold-border) 100%);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--t-med);
+  z-index: 0;
+}
+.glow-card:hover::before { opacity: 1; }
+.glow-card > * { position: relative; z-index: 1; }
+
+/* Float animation utility */
+.float-y { animation: float-y 4s ease-in-out infinite; }
+.float-y-slow { animation: float-y 7s ease-in-out infinite; }
+.float-y-delay { animation: float-y 5s ease-in-out 1s infinite; }
+
+/* ─────────────────────────────────────────────────────────────
+   New Keyframes
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent-emerald); }
+  50% { opacity: 0.6; box-shadow: 0 0 16px var(--accent-emerald); }
+}
+
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: var(--gold-border); box-shadow: 0 0 0 rgba(201,168,76,0); }
+  50% { border-color: var(--gold-border-strong); box-shadow: 0 0 20px rgba(201,168,76,0.2); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in-blur {
+  from { opacity: 0; filter: blur(8px); }
+  to { opacity: 1; filter: blur(0); }
+}

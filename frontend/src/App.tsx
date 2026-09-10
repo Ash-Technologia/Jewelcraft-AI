@@ -2,9 +2,9 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, type Transition } from 'framer-motion'
 import Navbar from './components/ui/Navbar'
 import ParticleBackground from './components/ui/ParticleBackground'
+import LandingPage from './pages/LandingPage'
 import Generate from './pages/Generate'
 import Designer from './pages/Designer'
-import Catalog from './pages/Catalog'
 import Export from './pages/Export'
 import ClientView from './pages/ClientView'
 
@@ -41,10 +41,9 @@ function App() {
           transition={pageTransition}
         >
           <Routes location={location}>
-            <Route path="/" element={<Generate />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/designer" element={<Designer />} />
-            <Route path="/catalog" element={<Catalog />} />
             <Route path="/export" element={<Export />} />
 
             <Route path="/view/:shareId" element={<ClientView />} />

@@ -210,7 +210,7 @@
 }
 
 .exp-validation-warn {
-    color: var(--accent-sapphire);
+    color: var(--accent-indigo);
     font-size: 13px;
 }
 
@@ -249,3 +249,131 @@
 .exp-check-fail {
     color: var(--accent-crimson);
 }
+
+/* Fix --accent-sapphire undefined */
+.exp-validation-warn { color: var(--accent-indigo); font-size: 13px; }
+
+/* ── Enhanced Package Cards ── */
+.exp-pkg-card {
+    padding: 18px 20px;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.exp-pkg-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+/* Downloaded state */
+.exp-pkg-card.downloaded {
+    border-color: rgba(46, 204, 138, 0.35) !important;
+    background: rgba(46, 204, 138, 0.04);
+}
+
+/* Package icon styling */
+.exp-pkg-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: var(--bg-raised);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+/* Download progress dots animation */
+.exp-pkg-loading {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.exp-pkg-loading-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: waveform 0.9s ease-in-out infinite;
+}
+
+.exp-pkg-loading-dot:nth-child(2) { animation-delay: 0.15s; }
+.exp-pkg-loading-dot:nth-child(3) { animation-delay: 0.30s; }
+
+@keyframes waveform {
+    0%, 100% { transform: scaleY(1); opacity: 0.5; }
+    50% { transform: scaleY(1.6); opacity: 1; }
+}
+
+/* Download-all button shimmer */
+.exp-download-all-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.exp-download-all-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: skewX(-20deg);
+    animation: shimmer 2.5s linear infinite;
+}
+
+/* Manufacture score arc */
+.exp-score-arc {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.exp-score-arc svg {
+    transform: rotate(-90deg);
+}
+
+.exp-score-arc-track {
+    fill: none;
+    stroke: var(--border-subtle);
+    stroke-width: 6;
+}
+
+.exp-score-arc-fill {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exp-score-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.exp-score-label-sub {
+    font-size: 8px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .exp-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,62 +1,105 @@
 /**
- * Service to fetch real-time precious metal prices.
- * Uses a public API with fallback logic.
+ * Metal Price Service
+ *
+ * Instead of calling GoldAPI directly from the browser (CORS blocked without a key),
+ * we call our FastAPI backend's /api/metal-prices endpoint, which:
+ *   1. Proxies the GoldAPI call server-side (no CORS issues)
+ *   2. Caches the result for 1 hour to avoid hammering the free-tier rate limit
+ *   3. Falls back to hardcoded realistic prices if the API is unavailable
+ *
+ * The backend reads GOLDAPI_KEY from its .env file.
  */
 
-const GOLD_API_URL = 'https://www.goldapi.io/api/XAU/INR';
-const PLAT_API_URL = 'https://www.goldapi.io/api/XPT/INR';
-const SILVER_API_URL = 'https://www.goldapi.io/api/XAG/INR';
-
-// Note: For production, these should be in .env and proxied through a backend to hide keys.
-// For this demo/implementation, we'll use a structure that can take a key if provided.
-const API_KEY = ''; // Add your goldapi.io key here if you have one
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 export interface LivePrices {
-    gold: number;
-    platinum: number;
-    silver: number;
-    timestamp: number;
+    gold: number           // per gram, INR
+    platinum: number       // per gram, INR
+    silver: number         // per gram, INR
+    timestamp: number
+    source: 'live' | 'cached' | 'fallback'
 }
 
-export const fetchMetalPrices = async (): Promise<LivePrices | null> => {
+// Realistic INR fallback prices (updated Sep 2026 approximate)
+const FALLBACK_PRICES: LivePrices = {
+    gold: 6800,       // ₹6,800/g (≈ 18k gold ₹5,100/g)
+    platinum: 3200,   // ₹3,200/g
+    silver: 90,       // ₹90/g
+    timestamp: Date.now(),
+    source: 'fallback',
+}
+
+// In-memory cache so we don't call the backend on every render
+let cachedPrices: LivePrices | null = null
+let cacheTimestamp = 0
+const CACHE_TTL_MS = 10 * 60 * 1000  // 10 min client-side cache
+
+export const fetchMetalPrices = async (): Promise<LivePrices> => {
+    // Return client-side cache if fresh
+    if (cachedPrices && Date.now() - cacheTimestamp < CACHE_TTL_MS) {
+        return cachedPrices
+    }
+
     try {
-        const headers: HeadersInit = {
-            'Content-Type': 'application/json'
-        };
-        
-        if (API_KEY) {
-            headers['x-access-token'] = API_KEY;
+        const resp = await fetch(`${API_BASE}/metal-prices`)
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+
+        const data = await resp.json()
+
+        const prices: LivePrices = {
+            gold: data.gold_per_gram ?? FALLBACK_PRICES.gold,
+            platinum: data.platinum_per_gram ?? FALLBACK_PRICES.platinum,
+            silver: data.silver_per_gram ?? FALLBACK_PRICES.silver,
+            timestamp: data.timestamp ?? Date.now(),
+            source: data.source ?? 'live',
         }
 
-        // We'll fetch Gold as the primary anchor. 
-        // If no API key is provided, the free tier of some APIs might block CORs or require it.
-        // We'll attempt the fetch and return null if it fails, allowing the app to fallback.
-        
-        const fetchRate = async (url: string) => {
-            const resp = await fetch(url, { headers });
-            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-            const data = await resp.json();
-            // GoldAPI returns price per ounce (troy ounce approx 31.1g)
-            // We convert to per gram
-            return data.price / 31.1035;
-        };
-
-        // For this demo, let's try a simpler one-call API if possible, or parallelize these.
-        // Using Promise.all to fetch all three.
-        const [gold, plat, silver] = await Promise.all([
-            fetchRate(GOLD_API_URL).catch(() => 5500), // fallback to realistic gram rate if one fails
-            fetchRate(PLAT_API_URL).catch(() => 3200),
-            fetchRate(SILVER_API_URL).catch(() => 80)
-        ]);
-
-        return {
-            gold,
-            platinum: plat,
-            silver: silver,
-            timestamp: Date.now()
-        };
+        cachedPrices = prices
+        cacheTimestamp = Date.now()
+        return prices
     } catch (err) {
-        console.error('Failed to fetch live metal prices:', err);
-        return null;
+        console.warn('[MetalPrices] Backend unavailable, using fallback prices:', err)
+        return { ...FALLBACK_PRICES, timestamp: Date.now() }
     }
-};
+}
+
+/** Compute estimated price (INR) for a ring/jewelry piece */
+export function estimatePrice(params: {
+    metal: { type: string }
+    stones: Array<{ type: string; size: number }>
+    halo: { enabled: boolean; stoneCount: number }
+    prongs: { count: number }
+    band: { width: number }
+}, prices: LivePrices = FALLBACK_PRICES): number {
+    const metalWeight = params.band.width * 3.2  // grams (rough estimate)
+    const metalCost = (() => {
+        switch (params.metal.type) {
+            case 'platinum': return metalWeight * prices.platinum
+            case 'white_gold':
+            case 'yellow_gold':
+            case 'rose_gold': return metalWeight * prices.gold * 0.75  // 18k = 75% gold
+            case 'silver': return metalWeight * prices.silver
+            default: return metalWeight * prices.gold * 0.75
+        }
+    })()
+
+    const stoneCost = params.stones.reduce((sum, s) => {
+        const carat = s.size
+        const pricePerCarat = (() => {
+            switch (s.type) {
+                case 'diamond': return 150000   // ₹1.5L/ct
+                case 'ruby': return 80000
+                case 'sapphire': return 60000
+                case 'emerald': return 70000
+                case 'moissanite': return 8000
+                default: return 20000
+            }
+        })()
+        return sum + carat * pricePerCarat
+    }, 0)
+
+    const haloAddition = params.halo.enabled ? params.halo.stoneCount * 3000 : 0
+    const laborCost = 12000 + params.prongs.count * 800
+
+    return Math.round(metalCost + stoneCost + haloAddition + laborCost)
+}

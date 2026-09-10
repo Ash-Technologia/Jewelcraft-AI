@@ -4,11 +4,10 @@
 
 import { Suspense, useEffect, useRef, useMemo } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
-import { OrbitControls, Environment, ContactShadows, useProgress } from '@react-three/drei'
+import { OrbitControls, Environment, ContactShadows, useProgress, useGLTF, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { DesignParams } from '../../store/useAppStore'
-import JewelMesh from './JewelMesh'
-import { ZoomIn, ZoomOut } from 'lucide-react'
+import { ZoomIn, ZoomOut, Gem } from 'lucide-react'
 import './JewelViewer.css'
 
 interface Props {
@@ -17,9 +16,118 @@ interface Props {
     autoRotate?: boolean
     renderMode?: 'pbr' | 'clay' | 'wireframe'
     lightPreset?: 'studio' | 'showroom' | 'dramatic'
-    /** Drives structural design variant in JewelMesh */
     variant?: 'classic' | 'modern' | 'ornate'
     hiddenParts?: Set<string>
+    modelUrl?: string
+    allowFallback?: boolean
+    colorMode?: 'original' | 'recolored'
+    onModelLoaded?: (scene: THREE.Group) => void
+}
+
+function Neural3DModel({
+    url,
+    params,
+    renderMode = 'pbr',
+    colorMode = 'original',
+    onLoaded,
+}: {
+    url: string
+    params: DesignParams
+    renderMode?: 'pbr' | 'clay' | 'wireframe'
+    colorMode?: 'original' | 'recolored'
+    onLoaded?: (scene: THREE.Group) => void
+}) {
+    const gltf = useGLTF(url)
+
+    useEffect(() => {
+        if (!gltf?.scene) return
+
+        // Reset transform before re-measuring to prevent compounding scales
+        gltf.scene.scale.set(1, 1, 1)
+        gltf.scene.position.set(0, 0, 0)
+        gltf.scene.rotation.set(0, 0, 0)
+        gltf.scene.updateMatrixWorld(true)
+
+        // 1. Center & normalize the 3D mesh precisely in the viewer
+        const box = new THREE.Box3().setFromObject(gltf.scene)
+        const center = box.getCenter(new THREE.Vector3())
+        const size = box.getSize(new THREE.Vector3())
+        const maxDim = Math.max(size.x, size.y, size.z) || 1
+        const scaleFactor = 2.4 / maxDim
+
+        gltf.scene.scale.setScalar(scaleFactor)
+        gltf.scene.position.set(-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor)
+        gltf.scene.updateMatrixWorld(true)
+
+        const metalHex = params.metal?.color || '#FFD700'
+        const metalColor = new THREE.Color(metalHex)
+
+        gltf.scene.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh
+                mesh.castShadow = true
+                mesh.receiveShadow = true
+
+                // Compute smooth normals across all vertices to eliminate faceted/broken artifacts!
+                if (mesh.geometry) {
+                    mesh.geometry.computeVertexNormals()
+                }
+
+                if (renderMode === 'wireframe') {
+                    mesh.material = new THREE.MeshBasicMaterial({
+                        color: new THREE.Color('#C5A059'),
+                        wireframe: true,
+                    })
+                } else if (renderMode === 'clay') {
+                    mesh.material = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color('#C8C2BA'),
+                        metalness: 0.05,
+                        roughness: 0.85,
+                    })
+                } else {
+                    const origMat = mesh.material as THREE.MeshStandardMaterial
+                    const hasTexture = Boolean(origMat?.map)
+                    const hasVertexColors = Boolean(mesh.geometry?.attributes?.color)
+
+                    if (colorMode === 'original') {
+                        // 100% faithful raw photo-captured colors & textures!
+                        // Avoid high metalness which wipes out diffuse colors with environment reflections!
+                        const physicalMat = new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color('#FFFFFF'),
+                            map: origMat?.map || null,
+                            vertexColors: hasVertexColors,
+                            metalness: 0.18,          // Preserves 82% authentic diffuse color (rich gold & diamonds)
+                            roughness: 0.22,          // Smooth lustrous finish
+                            clearcoat: 0.85,          // Liquid diamond clearcoat brilliance
+                            clearcoatRoughness: 0.05,
+                            ior: 2.417,               // Diamond refractive index
+                            envMapIntensity: 0.95,    // Natural, rich lighting without blowout
+                        })
+                        mesh.material = physicalMat
+                    } else {
+                        // Atelier Recolor mode: apply the selected precious metal alloy!
+                        const physicalMat = new THREE.MeshPhysicalMaterial({
+                            color: metalColor,
+                            map: null,
+                            vertexColors: false,
+                            metalness: 0.92,
+                            roughness: Math.max(0.06, params.metal?.roughness ?? 0.12),
+                            clearcoat: 1.0,
+                            clearcoatRoughness: 0.04,
+                            ior: 2.417,
+                            envMapIntensity: 2.2,
+                        })
+                        mesh.material = physicalMat
+                    }
+                    mesh.material.needsUpdate = true
+                }
+            }
+        })
+
+        onLoaded?.(gltf.scene)
+    }, [gltf, params.metal?.color, params.metal?.roughness, renderMode, colorMode, onLoaded])
+
+    return gltf?.scene ? <primitive object={gltf.scene} /> : null
 }
 
 type CamCfg = {
@@ -85,6 +193,21 @@ function Loader() {
     )
 }
 
+function ModelLoadingFallback() {
+    const { progress } = useProgress()
+    return (
+        <Html center>
+            <div className="jewel-loading-hud">
+                <div className="jewel-loading-pulse">
+                    <Gem size={26} className="text-gold" />
+                </div>
+                <div className="jewel-loading-txt">Synthesizing Neural 3D Geometry</div>
+                <div className="jewel-loading-prog">{Math.round(progress)}% • 256³ Marching Cubes</div>
+            </div>
+        </Html>
+    )
+}
+
 export default function JewelViewer({
     params,
     mini = false,
@@ -93,6 +216,10 @@ export default function JewelViewer({
     lightPreset = 'showroom',
     variant = 'classic',
     hiddenParts = new Set<string>(),
+    modelUrl,
+    allowFallback = false,
+    colorMode = 'original',
+    onModelLoaded,
 }: Props) {
     const cfg = camFor(params.type ?? 'ring')
     const pos = mini ? cfg.mPos : cfg.pos
@@ -151,46 +278,65 @@ export default function JewelViewer({
             >
                 <CameraSync params={params} mini={mini} />
 
-                <ambientLight intensity={0.35} />
-
-                {lightPreset === 'studio' && (<>
-                    <ambientLight intensity={1.5} color="#ffffff" />
-                    <directionalLight position={[5, 12, 10]} intensity={2.0} color="#ffffff" castShadow shadow-mapSize={[2048, 2048]} />
-                    <directionalLight position={[-8, 6, -6]} intensity={1.5} color="#f0f4ff" />
-                    <spotLight position={[0, 15, 0]} intensity={2.0} angle={0.4} penumbra={1} castShadow />
-                </>)}
                 {lightPreset === 'showroom' && (<>
-                    <color attach="background" args={['#0a0a0c']} />
-                    <ambientLight intensity={0.8} color="#ffe8cc" />
-                    <directionalLight position={[4, 10, 8]} intensity={3.5} color="#fff8f0" castShadow
+                    <color attach="background" args={['#0E0D0B']} />
+                    <ambientLight intensity={1.5} color="#FAF7F0" />
+                    {/* Primary Haute Joaillerie key light */}
+                    <directionalLight
+                        position={[6, 12, 8]}
+                        intensity={4.8}
+                        color="#FFF8E7"
+                        castShadow
                         shadow-mapSize={[2048, 2048]}
-                        shadow-camera-near={0.5} shadow-camera-far={50}
+                        shadow-camera-near={0.5}
+                        shadow-camera-far={25}
                         shadow-camera-left={-8} shadow-camera-right={8}
                         shadow-camera-top={8} shadow-camera-bottom={-8}
                     />
-                    <directionalLight position={[-6, -4, -4]} intensity={1.8} color="#ddecff" />
-                    <pointLight position={[0, 5, -5]} intensity={2.5} color="#ffaa60" />
-                    <pointLight position={[5, -2, 2]} intensity={1.5} color="#ffffff" />
-                </>)}
-                {lightPreset === 'dramatic' && (<>
-                    <color attach="background" args={['#020204']} />
-                    <ambientLight intensity={0.15} color="#222" />
-                    <spotLight position={[6, 12, 6]} intensity={15.0} angle={0.25} penumbra={0.9} color="#ffd700" castShadow shadow-mapSize={[2048, 2048]} />
-                    <spotLight position={[-6, 4, -6]} intensity={12.0} angle={0.5} penumbra={1} color="#00aaff" />
-                    <pointLight position={[0, -3, 4]} intensity={5.0} color="#ff0055" />
-                    <rectAreaLight width={10} height={10} position={[0, 10, -5]} intensity={2} color="#ffffff" />
+                    {/* Diamond scintillation pin-lights */}
+                    <spotLight position={[3, 8, 4]} intensity={9.0} angle={0.32} penumbra={0.5} color="#FFFFFF" castShadow />
+                    <spotLight position={[-3, 8, 4]} intensity={7.5} angle={0.35} penumbra={0.6} color="#FFE8B0" />
+                    <directionalLight position={[-8, 6, -6]} intensity={2.2} color="#F5EFEB" />
+                    <pointLight position={[0, -4, 5]} intensity={1.5} color="#FAF8F5" />
                 </>)}
 
-                <Suspense fallback={null}>
-                    <Environment preset="studio" background={false} blur={0.5} />
-                    
-                    <JewelMesh 
-                        params={params} 
-                        renderMode={renderMode} 
-                        variant={variant} 
-                        hiddenParts={hiddenParts} 
-                        clippingPlanes={clippingPlanes}
+                {lightPreset === 'studio' && (<>
+                    <color attach="background" args={['#12110F']} />
+                    <ambientLight intensity={1.9} color="#FFFFFF" />
+                    {/* Balanced dual softbox macro studio (5500K neutral daylight) */}
+                    <directionalLight position={[0, 14, 8]} intensity={4.2} color="#FFFFFF" castShadow />
+                    <directionalLight position={[-10, 4, 0]} intensity={3.0} color="#F8F9FA" />
+                    <directionalLight position={[10, 4, 0]} intensity={3.0} color="#FAF8F5" />
+                    <directionalLight position={[0, -6, -8]} intensity={1.8} color="#FFFFFF" />
+                    <spotLight position={[0, 12, 0]} intensity={3.5} angle={0.5} penumbra={0.8} color="#FFFFFF" />
+                </>)}
+
+                {lightPreset === 'dramatic' && (<>
+                    <color attach="background" args={['#070605']} />
+                    <ambientLight intensity={0.20} color="#1C1A17" />
+                    {/* Museum vitrine chiaroscuro spotlight with warm champagne rim light */}
+                    <spotLight position={[4, 15, 6]} intensity={20.0} angle={0.26} penumbra={0.65} color="#FFF5E5" castShadow shadow-mapSize={[2048, 2048]} />
+                    <spotLight position={[-6, 7, -6]} intensity={8.0} angle={0.35} penumbra={0.9} color="#EDE4D8" />
+                    <pointLight position={[0, 3, 5]} intensity={6.0} color="#D4AF37" />
+                    <pointLight position={[0, -4, 0]} intensity={2.5} color="#C5A059" />
+                </>)}
+
+                <Suspense fallback={<ModelLoadingFallback />}>
+                    <Environment
+                        preset={lightPreset === 'showroom' ? 'lobby' : (lightPreset === 'studio' ? 'studio' : 'night')}
+                        background={false}
+                        blur={0.4}
                     />
+
+                    {modelUrl ? (
+                        <Neural3DModel
+                            url={modelUrl}
+                            params={params}
+                            renderMode={renderMode}
+                            colorMode={colorMode}
+                            onLoaded={onModelLoaded}
+                        />
+                    ) : null}
 
                     {!mini && (
                         <ContactShadows
