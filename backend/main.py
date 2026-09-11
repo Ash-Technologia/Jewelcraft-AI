@@ -82,14 +82,23 @@ UPLOADS_DIR    = Path(__file__).parent / "uploads"
 EXPORTS_DIR    = UPLOADS_DIR / "exports"
 SCRIPT_PATH    = Path(__file__).parent / "scripts" / "generate_jewelry.py"
 
-ALLOWED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get(
-        "ALLOWED_ORIGINS",
-        "http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://localhost:5175"
-    ).split(",")
-    if o.strip()
+raw_origins = os.environ.get("ALLOWED_ORIGINS", "")
+default_origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://127.0.0.1:5173",
+    "https://jewelcraft-ai.vercel.app",
 ]
+if raw_origins and raw_origins.strip() == "*":
+    ALLOWED_ORIGINS = ["*"]
+    ALLOW_ORIGIN_REGEX = None
+    ALLOW_CREDENTIALS = False
+else:
+    custom_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
+    ALLOWED_ORIGINS = list(set(default_origins + custom_origins))
+    ALLOW_ORIGIN_REGEX = r"https://.*\.vercel\.app"
+    ALLOW_CREDENTIALS = True
 
 UPLOADS_DIR.mkdir(exist_ok=True)
 EXPORTS_DIR.mkdir(exist_ok=True)
@@ -156,7 +165,8 @@ app = FastAPI(title="JewelCraft AI API", version="2.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
+    allow_origin_regex=ALLOW_ORIGIN_REGEX,
+    allow_credentials=ALLOW_CREDENTIALS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
