@@ -7,8 +7,18 @@
  *   VITE_WS_URL   — defaults to ws://localhost:8000/ws
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
-const WS_BASE  = import.meta.env.VITE_WS_URL  || 'ws://localhost:8000/ws'
+const rawApiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').trim().replace(/\/+$/, '')
+export const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`
+
+export function getBackendOrigin(): string {
+    return API_BASE.replace(/\/api$/, '')
+}
+
+export const WS_BASE = (import.meta.env.VITE_WS_URL || (
+    getBackendOrigin().startsWith('https://')
+        ? getBackendOrigin().replace('https://', 'wss://') + '/ws'
+        : getBackendOrigin().replace('http://', 'ws://') + '/ws'
+)).trim().replace(/\/+$/, '')
 
 // ── WebSocket Manager ──────────────────────────────────────────────────────────
 

@@ -187,6 +187,21 @@ Check out [backend/DEPLOYMENT.md](backend/DEPLOYMENT.md) for 1-click manifests a
 
 ---
 
+## ⚡ Production Frontend Deployment (Vercel)
+
+The React 18 + Vite frontend is pre-configured with [`frontend/vercel.json`](frontend/vercel.json) for smooth SPA routing and instant Vercel deployments.
+
+> 📖 **Full Guide**: See the [Vercel Deployment & Backend Linking Guide](frontend/DEPLOYMENT.md).
+
+### Linking Vercel to Your Deployed Backend:
+1. In your **Vercel Project Dashboard** $\rightarrow$ **Settings** $\rightarrow$ **Environment Variables**, add:
+   * **`VITE_API_URL`**: `https://your-backend.onrender.com/api`
+2. In your **Render / Backend Dashboard** $\rightarrow$ **Environment Variables**, add your Vercel URL to CORS:
+   * **`ALLOWED_ORIGINS`**: `https://your-project.vercel.app`
+3. Click **Redeploy** in Vercel to bake in the production API URL.
+
+---
+
 ## 🌟 Benefits & Industry Impact
 
 ### 1. For Jewelers & Goldsmiths

@@ -18,6 +18,7 @@ import {
     generate3DFromText,
     getMetalPrices,
     downloadBlob,
+    getBackendOrigin,
     type AnalysisResult
 } from '../api/client'
 import {
@@ -165,11 +166,12 @@ export default function Generate() {
             generate3DFromImage(file, res.session_id)
                 .then((tripoRes) => {
                     if (tripoRes.success && tripoRes.glb_url) {
+                        const origin = getBackendOrigin()
                         const fullGlbUrl = tripoRes.glb_url.startsWith('http')
                             ? tripoRes.glb_url
-                            : `http://localhost:8000${tripoRes.glb_url}`
+                            : `${origin}${tripoRes.glb_url}`
                         const fullObjUrl = tripoRes.obj_url
-                            ? (tripoRes.obj_url.startsWith('http') ? tripoRes.obj_url : `http://localhost:8000${tripoRes.obj_url}`)
+                            ? (tripoRes.obj_url.startsWith('http') ? tripoRes.obj_url : `${origin}${tripoRes.obj_url}`)
                             : undefined
                         setNeural3DResult({ glb_url: fullGlbUrl, obj_url: fullObjUrl })
                         setActive3DModel(fullGlbUrl, fullObjUrl, title)
@@ -219,9 +221,10 @@ export default function Generate() {
             generate3DFromText(promptText)
                 .then((shapeRes) => {
                     if (shapeRes.success && shapeRes.obj_url) {
+                        const origin = getBackendOrigin()
                         const fullObjUrl = shapeRes.obj_url.startsWith('http')
                             ? shapeRes.obj_url
-                            : `http://localhost:8000${shapeRes.obj_url}`
+                            : `${origin}${shapeRes.obj_url}`
                         setNeural3DResult({ obj_url: fullObjUrl })
                         setActive3DModel(fullObjUrl, fullObjUrl, title)
                         toast.success('🎉 Hugging Face Shap-E 3D model generated!')
