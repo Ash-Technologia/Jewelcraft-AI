@@ -15,9 +15,8 @@
 
 ## 🏆 Hackathon & Team Information
 
-* **Hackathon**: Global Generative AI & Multimodal Innovation Hackathon 2026
-* **Track / Category**: Generative AI, Multimodal Vision, Computer Vision & 3D Synthesis
-* **Team Name**: **Team Technologia** (`Ash-Technologia`)
+* **Hackathon**: Syrus Hackathon 2026 by CodeCell Tinkerers from Computer Department VESIT
+* **Team Name**: **RoboMasters**
 * **Project Repository**: [https://github.com/Ash-Technologia/Jewelcraft-AI](https://github.com/Ash-Technologia/Jewelcraft-AI)
 * **Lead Developer / Author**: Ash-Technologia ([aayushsinghavi@gmail.com](mailto:aayushsinghavi@gmail.com))
 
@@ -197,4 +196,4 @@ Open `http://localhost:5173/` in your browser.
 ## 📄 License & Attribution
 
 This project is licensed under the **MIT License**.  
-Developed with ❤️ by **Team Technologia** (`Ash-Technologia`) for the Global Generative AI Hackathon.
+Developed with ❤️ by **RoboMasters** for **Syrus Hackathon 2026** (CodeCell Tinkerers, Computer Department VESIT).
