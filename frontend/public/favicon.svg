@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="goldPlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3C4"/>
+      <stop offset="30%" stop-color="#E5C175"/>
+      <stop offset="70%" stop-color="#B88A36"/>
+      <stop offset="100%" stop-color="#684A12"/>
+    </linearGradient>
+    <linearGradient id="facetHighlight" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="diamondBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8F4FD"/>
+      <stop offset="50%" stop-color="#A5D6F7"/>
+      <stop offset="100%" stop-color="#54A0E0"/>
+    </linearGradient>
+    <linearGradient id="gemShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141009"/>
+      <stop offset="100%" stop-color="#080705"/>
+    </linearGradient>
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Shield -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#gemShadow)" stroke="url(#goldPlate)" stroke-width="2" />
+  
+  <!-- Subtle Inner Ambient Ring -->
+  <circle cx="32" cy="32" r="24" stroke="url(#goldPlate)" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.4"/>
+
+  <!-- Master Brilliant Cut Diamond Core -->
+  <g filter="url(#goldGlow)">
+    <!-- Crown Top Facet -->
+    <polygon points="20,18 44,18 32,24" fill="url(#facetHighlight)" opacity="0.75"/>
+    
+    <!-- Crown Side Facets -->
+    <polygon points="12,26 20,18 32,24" fill="url(#goldPlate)" opacity="0.9"/>
+    <polygon points="44,18 52,26 32,24" fill="url(#goldPlate)" opacity="0.95"/>
+    
+    <!-- Upper Girdle Triangles -->
+    <polygon points="12,26 32,24 22,34" fill="url(#diamondBlue)" opacity="0.85"/>
+    <polygon points="52,26 32,24 42,34" fill="url(#diamondBlue)" opacity="0.9"/>
+    <polygon points="32,24 22,34 42,34" fill="#FFFFFF" opacity="0.95"/>
+
+    <!-- Lower Pavilion Facets -->
+    <polygon points="12,26 22,34 32,50" fill="url(#goldPlate)"/>
+    <polygon points="52,26 42,34 32,50" fill="url(#goldPlate)" opacity="0.8"/>
+    <polygon points="22,34 42,34 32,50" fill="url(#facetHighlight)" opacity="0.9"/>
+
+    <!-- Brilliant Sparkle Stars -->
+    <path d="M46 16 L47.5 20 L51.5 21.5 L47.5 23 L46 27 L44.5 23 L40.5 21.5 L44.5 20 Z" fill="#FFF8DE"/>
+    <circle cx="46" cy="21.5" r="1.5" fill="#FFFFFF"/>
+    
+    <path d="M18 38 L19 41 L22 42 L19 43 L18 46 L17 43 L14 42 L17 41 Z" fill="#FFF8DE" opacity="0.8"/>
+  </g>
+</svg>

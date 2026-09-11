@@ -15,6 +15,60 @@ const navLinks = [
 
 type AIStatus = 'gemini' | 'openai' | 'mock' | 'offline'
 
+function BrandLogoIcon() {
+    return (
+        <div className="navbar-logo-emblem">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="navbar-brand-svg">
+                <defs>
+                    <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFF4D0" />
+                        <stop offset="35%" stopColor="#E5C175" />
+                        <stop offset="75%" stopColor="#B38530" />
+                        <stop offset="100%" stopColor="#6C4E14" />
+                    </linearGradient>
+                    <linearGradient id="navDiamond" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFFFFF" />
+                        <stop offset="60%" stopColor="#CBE5F8" />
+                        <stop offset="100%" stopColor="#78B9ED" />
+                    </linearGradient>
+                    <linearGradient id="facetShine" x1="50%" y1="0%" x2="50%" y2="100%">
+                        <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                        <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.2" />
+                    </linearGradient>
+                    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="1" stdDeviation="2.5" floodColor="#D4AF37" floodOpacity="0.4" />
+                    </filter>
+                </defs>
+
+                {/* Outer Octagonal Gold Shield */}
+                <path d="M12 3 L28 3 L37 12 L37 28 L28 37 L12 37 L3 28 L3 12 Z" fill="#100D09" stroke="url(#navGold)" strokeWidth="1.6" />
+                <circle cx="20" cy="20" r="14" stroke="url(#navGold)" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.4" />
+
+                {/* Diamond Facets */}
+                <g filter="url(#logoGlow)">
+                    {/* Crown Top */}
+                    <polygon points="14,13 26,13 20,17" fill="url(#facetShine)" />
+                    {/* Crown Sides */}
+                    <polygon points="9,18 14,13 20,17" fill="url(#navGold)" opacity="0.9" />
+                    <polygon points="26,13 31,18 20,17" fill="url(#navGold)" opacity="0.9" />
+                    {/* Upper Girdle */}
+                    <polygon points="9,18 20,17 14,23" fill="url(#navDiamond)" opacity="0.9" />
+                    <polygon points="31,18 20,17 26,23" fill="url(#navDiamond)" opacity="0.9" />
+                    <polygon points="20,17 14,23 26,23" fill="#FFFFFF" opacity="0.95" />
+                    {/* Pavilion Lower */}
+                    <polygon points="9,18 14,23 20,31" fill="url(#navGold)" />
+                    <polygon points="31,18 26,23 20,31" fill="url(#navGold)" opacity="0.85" />
+                    <polygon points="14,23 26,23 20,31" fill="url(#facetShine)" />
+                </g>
+
+                {/* Sparkling Star */}
+                <path d="M28 8 L29 11 L32 12 L29 13 L28 16 L27 13 L24 12 L27 11 Z" fill="#FFFBE6" />
+                <circle cx="28" cy="12" r="1.2" fill="#FFFFFF" />
+            </svg>
+        </div>
+    )
+}
+
 export default function Navbar() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -63,14 +117,14 @@ export default function Navbar() {
             >
                 <div className="navbar-inner">
 
-                    {/* ── Logo ── */}
-                    <button onClick={() => navigate('/')} className="navbar-logo-btn">
-                        <div className="navbar-logo-gem">
-                            <Gem size={18} className="navbar-gem-icon" />
-                        </div>
+                    {/* ── Brand Logo ── */}
+                    <button onClick={() => navigate('/')} className="navbar-logo-btn" title="JewelCraft AI — Place Vendôme Autonomous Atelier">
+                        <BrandLogoIcon />
                         <div className="navbar-logo-text">
-                            <div className="navbar-logo-name">JewelCraft</div>
-                            <div className="navbar-logo-sub">AI Design Studio</div>
+                            <div className="navbar-logo-name">
+                                JEWEL<span className="navbar-logo-name-accent">CRAFT</span>
+                            </div>
+                            <div className="navbar-logo-sub">AUTONOMOUS 3D ATELIER</div>
                         </div>
                     </button>
 
