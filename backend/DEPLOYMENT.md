@@ -37,11 +37,14 @@ Render offers free/low-cost Web Services with automated GitHub CI/CD deployments
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 4. In **Environment Variables**, add:
    ```env
+   PYTHON_VERSION = 3.11.9
    GEMINI_API_KEY = your_gemini_api_key
    HF_TOKEN = your_hf_token
    GOLDAPI_KEY = your_goldapi_key
    ALLOWED_ORIGINS = https://your-frontend.vercel.app,http://localhost:5173
    ```
+   > ⚠️ **CRITICAL for Render**: Setting `PYTHON_VERSION=3.11.9` tells Render to use Python 3.11 instead of Python 3.14. This ensures pre-compiled binary wheels are used for `pydantic-core` and prevents the `maturin / cargo failed (Read-only file system)` Rust compiler error.
+
 5. Click **Create Web Service**.
 6. Once deployed, verify your live health endpoint:
    `https://jewelcraft-backend.onrender.com/health`

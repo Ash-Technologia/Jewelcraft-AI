@@ -173,7 +173,7 @@ The FastAPI backend is containerized and production-ready for deployment on **Re
 2. Set **Root Directory** to `backend`.
 3. Set **Build Command** to `pip install -r requirements.txt`.
 4. Set **Start Command** to `uvicorn main:app --host 0.0.0.0 --port $PORT`.
-5. Add environment secrets: `GEMINI_API_KEY`, `HF_TOKEN`, `GOLDAPI_KEY`, `ALLOWED_ORIGINS`.
+5. Add environment variables: `PYTHON_VERSION = 3.11.9` *(required to avoid Python 3.14 wheel compilation errors)*, `GEMINI_API_KEY`, `HF_TOKEN`, `GOLDAPI_KEY`, `ALLOWED_ORIGINS`.
 
 ### 2. Docker Container Deployment
 ```bash
