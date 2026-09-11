@@ -162,6 +162,31 @@ Open `http://localhost:5173/` in your browser.
 
 ---
 
+## 🌐 Production Backend Deployment
+
+The FastAPI backend is containerized and production-ready for deployment on **Render**, **Railway**, **Google Cloud Run**, **Docker**, or **Linux VPS / AWS EC2**.
+
+> 📖 **Full Step-by-Step Guide**: See the comprehensive [Backend Deployment Guide](backend/DEPLOYMENT.md) for detailed configuration, Nginx reverse proxy templates, and systemd service scripts.
+
+### 1. Render.com (Fastest Cloud Setup)
+1. Link your GitHub repo to a **Render Web Service**.
+2. Set **Root Directory** to `backend`.
+3. Set **Build Command** to `pip install -r requirements.txt`.
+4. Set **Start Command** to `uvicorn main:app --host 0.0.0.0 --port $PORT`.
+5. Add environment secrets: `GEMINI_API_KEY`, `HF_TOKEN`, `GOLDAPI_KEY`, `ALLOWED_ORIGINS`.
+
+### 2. Docker Container Deployment
+```bash
+cd backend
+docker build -t jewelcraft-backend .
+docker run -d -p 8000:8000 --env-file .env --restart unless-stopped jewelcraft-backend
+```
+
+### 3. Railway / Google Cloud Run / AWS EC2
+Check out [backend/DEPLOYMENT.md](backend/DEPLOYMENT.md) for 1-click manifests and serverless configurations.
+
+---
+
 ## 🌟 Benefits & Industry Impact
 
 ### 1. For Jewelers & Goldsmiths
